@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -18,32 +15,29 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            // Token system
+            $table->integer('token_balance')->default(50);          // saldo token saat ini
+            $table->integer('token_total_earned')->default(50);      // total token pernah diterima
+            $table->timestamp('token_last_refill_at')->nullable();   // kapan terakhir refill
+            $table->timestamp('token_next_refill_at')->nullable();   // kapan bisa refill berikutnya
+
+            // Plan
+            $table->enum('plan', ['free', 'premium'])->default('free');
+            $table->timestamp('plan_expires_at')->nullable();        // null = tidak expire (lifetime) atau free
+
+            // Provider OAuth (opsional)
+            $table->string('provider')->nullable();                  // google, github, dll
+            $table->string('provider_id')->nullable();
+            $table->string('avatar')->nullable();
+
             $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };
