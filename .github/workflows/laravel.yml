@@ -22,4 +22,4 @@ jobs:
           port: 2121
           script: |
             cd /var/www/Kemasify
-            git pull origin master
+            git pull origin main
