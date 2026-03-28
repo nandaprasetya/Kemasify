@@ -31,10 +31,11 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DesignProjectController::class, 'index'])->name('dashboard');
-
+    
     // ── Projects ──────────────────────────────────────────────────────────────
     Route::prefix('projects')->name('projects.')->group(function () {
         Route::get('/new',           [DesignProjectController::class, 'selectModel'])->name('select-model');
+        Route::get('/dashboard', [DesignProjectController::class, 'index'])->name('index');
         Route::post('/',             [DesignProjectController::class, 'create'])->name('create');
         Route::get('/{slug}/editor', [DesignProjectController::class, 'editor'])->name('editor');
         Route::delete('/{slug}',     [DesignProjectController::class, 'destroy'])->name('destroy');
