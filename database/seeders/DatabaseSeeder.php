@@ -3,13 +3,35 @@
 namespace Database\Seeders;
 
 use App\Models\ProductModel;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->seedAdminUser();
         $this->seedProductModels();
+    }
+
+    private function seedAdminUser(): void
+    {
+        User::updateOrCreate(
+            ['email' => 'admin@kemasify.com'],
+            [
+                'name'                 => 'Admin Kemasify',
+                'password'             => Hash::make('admin123456'),
+                'is_admin'             => true,
+                'plan'                 => 'premium',
+                'token_balance'        => 9999,
+                'token_total_earned'   => 9999,
+                'token_last_refill_at' => now(),
+                'token_next_refill_at' => '2037-12-31 23:59:59',
+                'email_verified_at'    => now(),
+            ]
+        );
+        $this->command->info('✓ Admin: admin@kemasify.com / admin123456');
     }
 
     private function seedProductModels(): void

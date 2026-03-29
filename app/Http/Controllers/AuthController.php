@@ -76,6 +76,11 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
+        // ← Tambah ini: admin redirect ke admin panel
+        if (Auth::user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+
         return redirect()->intended(route('dashboard'));
     }
 

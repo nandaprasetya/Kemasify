@@ -6,6 +6,11 @@ use App\Http\Controllers\DesignProjectController;
 use App\Http\Controllers\AiGenerationController;
 use App\Http\Controllers\RencerController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductModelController;
+use App\Http\Controllers\Admin\AiJobController;
+use App\Http\Controllers\Admin\RenderJobController;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
 Route::get('/', function () {
@@ -64,5 +69,50 @@ Route::middleware('auth')->group(function () {
         Route::get('/',       [TokenController::class, 'index'])->name('index');
         Route::get('/status', [TokenController::class, 'status'])->name('status');
         Route::post('/refill',[TokenController::class, 'refill'])->name('refill');
+    });
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+ 
+    // ── Dashboard ─────────────────────────────────────────────────────────────
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+ 
+    // ── Users ─────────────────────────────────────────────────────────────────
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/',                        [UserController::class, 'index'])->name('index');
+        Route::get('/{user}',                  [UserController::class, 'show'])->name('show');
+        Route::get('/{user}/edit',             [UserController::class, 'edit'])->name('edit');
+        Route::put('/{user}',                  [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}',               [UserController::class, 'destroy'])->name('destroy');
+        Route::post('/{user}/give-tokens',     [UserController::class, 'giveTokens'])->name('give-tokens');
+        Route::post('/{user}/toggle-admin',    [UserController::class, 'toggleAdmin'])->name('toggle-admin');
+        Route::post('/{user}/upgrade-premium', [UserController::class, 'upgradePremium'])->name('upgrade-premium');
+    });
+ 
+    // ── Product Models ────────────────────────────────────────────────────────
+    Route::prefix('product-models')->name('product-models.')->group(function () {
+        Route::get('/',                          [ProductModelController::class, 'index'])->name('index');
+        Route::get('/create',                    [ProductModelController::class, 'create'])->name('create');
+        Route::post('/',                         [ProductModelController::class, 'store'])->name('store');
+        Route::get('/{productModel}/edit',       [ProductModelController::class, 'edit'])->name('edit');
+        Route::put('/{productModel}',            [ProductModelController::class, 'update'])->name('update');
+        Route::delete('/{productModel}',         [ProductModelController::class, 'destroy'])->name('destroy');
+        Route::post('/{productModel}/toggle',    [ProductModelController::class, 'toggleActive'])->name('toggle');
+    });
+ 
+    // ── AI Jobs ───────────────────────────────────────────────────────────────
+    Route::prefix('ai-jobs')->name('ai-jobs.')->group(function () {
+        Route::get('/',              [AiJobController::class, 'index'])->name('index');
+        Route::get('/{aiJob}',       [AiJobController::class, 'show'])->name('show');
+        Route::post('/{aiJob}/retry',[AiJobController::class, 'retry'])->name('retry');
+        Route::delete('/{aiJob}',    [AiJobController::class, 'destroy'])->name('destroy');
+    });
+ 
+    // ── Render Jobs ───────────────────────────────────────────────────────────
+    Route::prefix('render-jobs')->name('render-jobs.')->group(function () {
+        Route::get('/',                   [RenderJobController::class, 'index'])->name('index');
+        Route::get('/{renderJob}',        [RenderJobController::class, 'show'])->name('show');
+        Route::post('/{renderJob}/retry', [RenderJobController::class, 'retry'])->name('retry');
+        Route::delete('/{renderJob}',     [RenderJobController::class, 'destroy'])->name('destroy');
     });
 });
