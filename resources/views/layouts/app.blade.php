@@ -391,6 +391,14 @@
             </svg>
             Token & Riwayat
         </a>
+        <a href="{{ route('payment.pricing') }}" class="nav-link {{ request()->routeIs('payment.*') ? 'active' : '' }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 7a2 2 0 0 1 2-2h14a1 1 0 0 1 1 1v3H5a2 2 0 0 0-2 2V7z"/>
+                <path d="M3 11a2 2 0 0 1 2-2h15a1 1 0 0 1 1 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z"/>
+                <circle cx="16" cy="13" r="1"/>
+            </svg>
+            Upgrade Akun & Top up
+        </a>
 
         {{-- Token Widget --}}
         @auth
