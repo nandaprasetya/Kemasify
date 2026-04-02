@@ -275,7 +275,7 @@
     display: flex; /* ✅ pindahkan ke sini */
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 10px;
     padding: 40px 24px;
     height: calc(100vh - 68px);
 
@@ -294,7 +294,7 @@
             font-family: 'Syne', sans-serif;
             font-size: 22px;
             font-weight: 700;
-            color: var(--text-muted);
+            color: var(--text);
             transition: color 0.2s;
         }
 
@@ -1110,7 +1110,7 @@
 
         <div class="features-grid">
             <!-- Card 1 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 26 26" fill="none">
                         <path
@@ -1124,7 +1124,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8952FF"
                         stroke-width="1.8">
@@ -1137,7 +1137,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8952FF"
                         stroke-width="1.8">
@@ -1150,7 +1150,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8952FF"
                         stroke-width="1.8">
@@ -1164,7 +1164,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8952FF"
                         stroke-width="1.8">
@@ -1177,7 +1177,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div class="feature-card">
+            <div class="feature-card fade-in">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8952FF"
                         stroke-width="1.8">
@@ -1461,15 +1461,14 @@
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.50 // Animasi mulai saat 15% elemen terlihat
+            threshold: 0.20 // Animasi mulai saat 15% elemen terlihat
         };
 
         const fadeObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry
-                    .target); // Hapus jika ingin animasi berulang saat scroll naik/turun
+                    observer.unobserve(entry.target); // Hapus jika ingin animasi berulang saat scroll naik/turun
                 }
             });
         }, observerOptions);
