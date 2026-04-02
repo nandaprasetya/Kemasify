@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(TokenTransaction::class)->latest();
     }
 
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class)->latest();
+    }
+
     // ─── Plan Helpers ─────────────────────────────────────────────────────────
 
     public function isPremium(): bool

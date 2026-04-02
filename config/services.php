@@ -29,12 +29,17 @@ return [
         ],
     ],
 
-    // ─── Gemini AI ────────────────────────────────────────────────────────────
     'gemini' => [
         'api_key'  => env('GEMINI_API_KEY'),
         'base_url' => env('GEMINI_BASE_URL', 'https://generativelanguage.googleapis.com/v1beta'),
         'model'    => env('GEMINI_MODEL', 'gemini-2.0-flash-preview-image-generation'),
         'timeout'  => env('GEMINI_TIMEOUT', 120),
+    ],
+
+    'midtrans' => [
+        'server_key'    => env('MIDTRANS_SERVER_KEY'),
+        'client_key'    => env('MIDTRANS_CLIENT_KEY'),
+        'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     ],
 
 ];

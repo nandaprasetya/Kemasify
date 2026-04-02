@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(TokenService::class, function ($app) {
             return new TokenService();
         });
+
+        $this->app->singleton(MidtransService::class, fn() => new MidtransService());
     }
 
     /**

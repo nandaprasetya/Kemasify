@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductModelController;
 use App\Http\Controllers\Admin\AiJobController;
 use App\Http\Controllers\GeminiProxyController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\RenderJobController;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
@@ -71,6 +72,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/',       [TokenController::class, 'index'])->name('index');
         Route::get('/status', [TokenController::class, 'status'])->name('status');
         Route::post('/refill',[TokenController::class, 'refill'])->name('refill');
+    });
+
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/',                        [PaymentController::class, 'pricing'])->name('pricing');
+        Route::post('/buy-premium',            [PaymentController::class, 'buyPremium'])->name('buy-premium');
+        Route::post('/buy-tokens',             [PaymentController::class, 'buyTokens'])->name('buy-tokens');
+        Route::get('/finish',                  [PaymentController::class, 'finish'])->name('finish');
+        Route::get('/history',                 [PaymentController::class, 'history'])->name('history');
+        Route::get('/check/{orderId}',         [PaymentController::class, 'checkStatus'])->name('check');
     });
 });
 
