@@ -307,7 +307,7 @@
         ============================================================ */
         .hero {
             position: relative;
-            padding: 100px 60px 120px;
+            padding: 40px 60px 120px;
             text-align: center;
             overflow: hidden;
         }
@@ -1195,7 +1195,7 @@
          CATEGORIES
     ============================================================ -->
     <section class="categories fade-in">
-        <div class="categories-header">
+        <div class="categories-header fade-in">
             <div>
                 <p class="section-label">Koleksi</p>
                 <h2>Kategori kemasan teratas</h2>
@@ -1209,8 +1209,8 @@
             </a>
         </div>
 
-        <div class="cat-grid">
-            <div class="cat-card">
+        <div class="cat-grid fade-in">
+            <div class="cat-card fade-in">
                 <div class="cat-img-wrapper">
                     <img src="{{ asset('assets/gambar-kemasan-kotak.png') }}" alt="Kemasan kotak">
                 </div>
@@ -1225,7 +1225,7 @@
                 </a>
             </div>
 
-            <div class="cat-card">
+            <div class="cat-card fade-in">
                 <div class="cat-img-wrapper">
                     <img src="{{ asset('assets/gambar-kemasan-kotak.png') }}" alt="Kemasan kotak">
                 </div>
@@ -1240,7 +1240,7 @@
                 </a>
             </div>
 
-            <div class="cat-card">
+            <div class="cat-card fade-in">
                 <div class="cat-img-wrapper">
                     <img src="{{ asset('assets/gambar-kemasan-kotak.png') }}" alt="Kemasan botol">
                 </div>
@@ -1262,7 +1262,7 @@
     ============================================================ -->
     <section class="branding-section fade-in">
         <div class="branding-grid">
-            <div class="branding-left">
+            <div class="branding-left fade-in">
                 <p class="section-label">Keunggulan</p>
                 <h2>Temukan ide branding<br>dengan <span>KemasAI</span></h2>
 
@@ -1323,7 +1323,7 @@
                 </div>
             </div>
 
-            <div class="branding-preview">
+            <div class="branding-preview fade-in">
                 <img src="{{ asset('assets/gambar-dashboard-mockup.png') }}" alt="Dashboard Kemasify">
             </div>
         </div>
