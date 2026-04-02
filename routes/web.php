@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductModelController;
 use App\Http\Controllers\Admin\AiJobController;
+use App\Http\Controllers\GeminiProxyController;
 use App\Http\Controllers\Admin\RenderJobController;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/generate/{slug}',   [AiGenerationController::class, 'generate'])->name('generate');
         Route::get('/status/{jobId}',     [AiGenerationController::class, 'status'])->name('status');
         Route::post('/cancel/{jobId}',    [AiGenerationController::class, 'cancel'])->name('cancel');
+        Route::post('/direct/{slug}',     [GeminiProxyController::class, 'generate'])->name('direct');
     });
 
     // ── Render ────────────────────────────────────────────────────────────────
