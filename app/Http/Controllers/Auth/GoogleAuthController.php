@@ -34,11 +34,12 @@ class GoogleAuthController extends Controller
         $user = User::updateOrCreate(
             ['email' => $googleUser->getEmail()],
             [
-                'name'      => $googleUser->getName(),
-                'google_id' => $googleUser->getId(),
-                'avatar'    => $googleUser->getAvatar(),
+                'name'          => $googleUser->getName(),
+                'provider'      => 'google',
+                'provider_id'   => $googleUser->getId(),
+                'avatar'        => $googleUser->getAvatar(),
                 // Password null karena login via Google
-                'password'  => bcrypt(\Illuminate\Support\Str::random(24)),
+                'password'      => bcrypt(\Illuminate\Support\Str::random(24)),
             ]
         );
 
