@@ -127,4 +127,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::post('/{renderJob}/retry', [RenderJobController::class, 'retry'])->name('retry');
         Route::delete('/{renderJob}',     [RenderJobController::class, 'destroy'])->name('destroy');
     });
+
+    // ── Orders / Payments ─────────────────────────────────────────────────────
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/',                    [OrderController::class, 'index'])->name('index');
+        Route::get('/{order}',             [OrderController::class, 'show'])->name('show');
+        Route::post('/{order}/mark-paid',  [OrderController::class, 'markPaid'])->name('mark-paid');
+        Route::post('/{order}/cancel',     [OrderController::class, 'cancel'])->name('cancel');
+    });
 });
