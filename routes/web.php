@@ -14,6 +14,7 @@ use App\Http\Controllers\GeminiProxyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RenderJobController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
 Route::get('/', function () {
@@ -21,6 +22,10 @@ Route::get('/', function () {
         ? redirect()->route('dashboard')
         : view('landing');
 })->name('home');
+
+// ─── Google Auth ──────────────────────────────────────────────────────────────────
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

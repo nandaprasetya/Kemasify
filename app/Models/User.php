@@ -17,7 +17,7 @@ class User extends Authenticatable
         'token_last_refill_at', 'token_next_refill_at',
         'plan', 'plan_expires_at',
         'provider', 'provider_id', 'avatar',
-        'is_admin',
+        'is_admin', 'google_id',
     ];
 
     protected $hidden = ['password', 'remember_token'];
