@@ -1036,7 +1036,7 @@
                 </svg>
             </a>
             <a href="{{ route('register') ?? '#' }}" class="btn btn-primary" style="font-size:14px; padding: 9px 20px;">
-                Daftar Gratis
+                Daftar Gratis gak mau
             </a>
         </div>
 
