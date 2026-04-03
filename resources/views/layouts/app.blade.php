@@ -11,23 +11,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
+        /* ─── Design Tokens ───────────────────────────────────────────── */
         :root {
-            --bg: #0d0d0f;
-            --bg2: #131316;
-            --bg3: #1a1a1f;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.15);
-            --text: #f0f0f2;
-            --text-muted: #7a7a85;
-            --accent: rgb(137,82,255);
-            --accent-dim: rgba(137,82,255,0.12);
-            --accent-hover: rgb(155,107,255);
-            --danger: #ff4757;
-            --warning: #ffa502;
-            --radius: 12px;
-            --radius-sm: 8px;
-            --radius-lg: 20px;
+            --purple:        #8952FF;
+            --purple-light:  rgba(137, 82, 255, 0.15);
+            --purple-border: rgba(137, 82, 255, 0.25);
+            --purple-hover:  #7540ea;
+            --bg:            #0d0d0f;
+            --bg-card:       #141417;
+            --bg-card-hover: #18181c;
+            --text:          #f0ecfa;
+            --text-muted:    #7a7585;
+            --border:        #252330;
+            --border-hover:  rgba(137, 82, 255, 0.4);
+            --radius-sm:     8px;
+            --radius-md:     14px;
+            --radius-lg:     22px;
+            --radius-full:   999px;
+
+            /* Legacy aliases kept for child views */
+            --bg2:          var(--bg-card);
+            --bg3:          var(--bg-card-hover);
+            --accent:       var(--purple);
+            --accent-dim:   var(--purple-light);
+            --accent-hover: var(--purple-hover);
+            --danger:       #ff4757;
+            --warning:      #ffa502;
+            --radius:       var(--radius-md);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
         body {
@@ -39,20 +51,44 @@
         }
         h1,h2,h3,h4,h5,h6 { font-family: 'Syne', sans-serif; line-height: 1.2; }
 
-        /* Layout */
+        /* ─── App Layout ──────────────────────────────────────────────── */
         .app-layout { display: flex; min-height: 100vh; }
+
+        /* ─── Sidebar ─────────────────────────────────────────────────── */
         .sidebar {
             width: 240px;
             flex-shrink: 0;
-            background: var(--bg2);
+            background: var(--bg-card);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             padding: 24px 16px;
             position: fixed;
             top: 0; left: 0; bottom: 0;
-            z-index: 100;
+            z-index: 200;
+            overflow-y: auto;
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.28s;
         }
+
+        /* ─── Overlay (mobile) ────────────────────────────────────────── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 190;
+            opacity: 0;
+            transition: opacity 0.28s;
+        }
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ─── Main Content ────────────────────────────────────────────── */
         .main-content {
             flex: 1;
             margin-left: 240px;
@@ -60,18 +96,62 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
+        /* ─── Topbar ──────────────────────────────────────────────────── */
         .topbar {
             height: 64px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            padding: 0 32px;
+            padding: 0 28px;
             gap: 16px;
             background: var(--bg);
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 150;
         }
+
+        /* ─── Hamburger ───────────────────────────────────────────────── */
+        .hamburger-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 38px; height: 38px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .hamburger-btn:hover {
+            border-color: var(--purple-border);
+            color: var(--purple);
+            background: var(--purple-light);
+        }
+
+        /* ─── Sidebar close (mobile) ──────────────────────────────────── */
+        .sidebar-close-btn {
+            display: none;
+            position: absolute;
+            top: 16px; right: 14px;
+            width: 32px; height: 32px;
+            align-items: center; justify-content: center;
+            background: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.15s;
+        }
+        .sidebar-close-btn:hover {
+            color: var(--purple);
+            border-color: var(--purple-border);
+            background: var(--purple-light);
+        }
+
+        /* ─── Page Content ────────────────────────────────────────────── */
         .page-content {
             flex: 1;
             padding: 40px 32px;
@@ -79,21 +159,23 @@
             width: 100%;
         }
 
-        /* Logo */
+        /* ─── Logo ────────────────────────────────────────────────────── */
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             margin-bottom: 32px;
+            padding-right: 36px; /* room for close btn on mobile */
         }
         .logo-icon {
             width: 36px; height: 36px;
-            background: var(--accent);
-            border-radius: 8px;
+            background: var(--purple);
+            border-radius: var(--radius-sm);
             display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
-        .logo-icon svg { color: #0d0d0f; }
+        .logo-icon svg { color: #fff; }
         .logo-text {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
@@ -101,7 +183,7 @@
             color: var(--text);
         }
 
-        /* Nav */
+        /* ─── Nav ─────────────────────────────────────────────────────── */
         .nav-section-label {
             font-size: 10px;
             font-weight: 600;
@@ -124,241 +206,232 @@
             font-weight: 500;
             transition: all 0.15s;
         }
-        .nav-link:hover { background: var(--bg3); color: var(--text); }
-        .nav-link.active { background: var(--accent-dim); color: var(--accent); }
+        .nav-link:hover { background: var(--bg-card-hover); color: var(--text); }
+        .nav-link.active {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
         .nav-link svg { flex-shrink: 0; }
 
-        /* Token widget */
+        /* ─── Token Widget ────────────────────────────────────────────── */
         .token-widget {
             margin-top: auto;
-            background: var(--bg3);
+            background: var(--bg-card-hover);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             padding: 16px;
         }
         .token-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
         .token-balance {
             font-family: 'Syne', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
+            font-size: 28px; font-weight: 800;
+            color: var(--purple); line-height: 1;
         }
         .token-bar-bg {
-            height: 4px;
-            background: var(--border);
-            border-radius: 99px;
-            margin: 10px 0;
+            height: 4px; background: var(--border);
+            border-radius: 99px; margin: 10px 0;
         }
         .token-bar-fill {
-            height: 4px;
-            background: var(--accent);
-            border-radius: 99px;
-            transition: width 0.5s;
+            height: 4px; background: var(--purple);
+            border-radius: 99px; transition: width 0.5s;
         }
         .token-meta { font-size: 12px; color: var(--text-muted); }
         .btn-refill {
-            display: block;
-            width: 100%;
-            margin-top: 12px;
-            padding: 8px;
+            display: block; width: 100%; margin-top: 12px; padding: 8px;
             background: transparent;
-            border: 1px solid var(--border-hover);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            color: var(--text);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.15s;
-            font-family: 'DM Sans', sans-serif;
+            color: var(--text); font-size: 13px; cursor: pointer;
+            transition: all 0.15s; font-family: 'DM Sans', sans-serif;
         }
-        .btn-refill:hover { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+        .btn-refill:hover {
+            background: var(--purple-light);
+            border-color: var(--purple-border);
+            color: var(--purple);
+        }
 
-        /* Buttons */
+        /* ─── Buttons ─────────────────────────────────────────────────── */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 500;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 500;
             font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-            transition: all 0.15s;
+            cursor: pointer; border: none;
+            text-decoration: none; transition: all 0.15s;
             white-space: nowrap;
         }
-        .btn-primary {
-            background: var(--accent);
-            color: #0d0d0f;
+        .btn-primary { background: var(--purple); color: #fff; }
+        .btn-primary:hover {
+            background: var(--purple-hover); transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(137,82,255,0.3);
         }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
         .btn-ghost {
-            background: transparent;
-            color: var(--text-muted);
+            background: transparent; color: var(--text-muted);
             border: 1px solid var(--border);
         }
         .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); }
         .btn-danger {
-            background: transparent;
-            color: var(--danger);
+            background: transparent; color: var(--danger);
             border: 1px solid rgba(255,71,87,0.3);
         }
         .btn-danger:hover { background: rgba(255,71,87,0.1); }
         .btn-sm { padding: 6px 12px; font-size: 13px; }
         .btn-lg { padding: 14px 28px; font-size: 16px; }
 
-        /* Cards */
+        /* ─── Cards ───────────────────────────────────────────────────── */
         .card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 24px;
         }
         .card-hover { transition: border-color 0.15s, transform 0.15s; }
         .card-hover:hover { border-color: var(--border-hover); transform: translateY(-2px); }
 
-        /* Alerts */
+        /* ─── Alerts ──────────────────────────────────────────────────── */
         .alert {
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+            padding: 12px 16px; border-radius: var(--radius-sm);
+            font-size: 14px; margin-bottom: 20px;
+            display: flex; align-items: flex-start; gap: 10px;
         }
-        .alert-success { background: rgba(137,82,255,0.1); border: 1px solid rgba(137,82,255,0.3); color: var(--accent); }
-        .alert-error   { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: var(--danger); }
-        .alert-warning  { background: rgba(255,165,2,0.1); border: 1px solid rgba(255,165,2,0.3); color: var(--warning); }
+        .alert-success { background: rgba(137,82,255,0.1); border: 1px solid rgba(137,82,255,0.3); color: var(--purple); }
+        .alert-error   { background: rgba(255,71,87,0.1);  border: 1px solid rgba(255,71,87,0.3);  color: var(--danger); }
+        .alert-warning  { background: rgba(255,165,2,0.1);  border: 1px solid rgba(255,165,2,0.3);  color: var(--warning); }
 
-        /* Forms */
+        /* ─── Forms ───────────────────────────────────────────────────── */
         .form-group { margin-bottom: 20px; }
         .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+            display: block; font-size: 13px; font-weight: 500;
+            color: var(--text-muted); margin-bottom: 8px;
         }
         .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 10px 14px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text);
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            transition: border-color 0.15s;
-            outline: none;
+            width: 100%; padding: 10px 14px;
+            background: var(--bg-card-hover); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: var(--text);
+            font-size: 14px; font-family: 'DM Sans', sans-serif;
+            transition: border-color 0.15s, box-shadow 0.15s; outline: none;
         }
         .form-input:focus, .form-select:focus, .form-textarea:focus {
-            border-color: var(--accent);
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px var(--purple-light);
         }
         .form-textarea { resize: vertical; min-height: 100px; }
         .form-error { font-size: 12px; color: var(--danger); margin-top: 6px; }
 
-        /* Badge */
+        /* ─── Badges ──────────────────────────────────────────────────── */
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 99px;
-            font-size: 11px;
-            font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 3px 8px; border-radius: 99px;
+            font-size: 11px; font-weight: 600;
         }
         .badge-premium { background: linear-gradient(135deg, #f8b803, #ff6b35); color: #0d0d0f; }
-        .badge-free    { background: var(--bg3); border: 1px solid var(--border); color: var(--text-muted); }
-        .badge-success { background: rgba(137,82,255,0.15); color: var(--accent); }
+        .badge-free    { background: var(--bg-card-hover); border: 1px solid var(--border); color: var(--text-muted); }
+        .badge-success { background: var(--purple-light); color: var(--purple); }
         .badge-pending { background: rgba(255,165,2,0.15); color: var(--warning); }
         .badge-failed  { background: rgba(255,71,87,0.15); color: var(--danger); }
 
-        /* Utilities */
+        /* ─── Utilities ───────────────────────────────────────────────── */
         .flex { display: flex; }
         .items-center { align-items: center; }
         .justify-between { justify-content: space-between; }
-        .gap-2 { gap: 8px; }
-        .gap-3 { gap: 12px; }
-        .gap-4 { gap: 16px; }
+        .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; }
         .ml-auto { margin-left: auto; }
-        .mt-1 { margin-top: 4px; }
-        .mt-2 { margin-top: 8px; }
-        .mt-4 { margin-top: 16px; }
-        .mt-6 { margin-top: 24px; }
-        .mb-2 { margin-bottom: 8px; }
-        .mb-4 { margin-bottom: 16px; }
-        .mb-6 { margin-bottom: 24px; }
+        .mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-4{margin-top:16px}.mt-6{margin-top:24px}
+        .mb-2{margin-bottom:8px}.mb-4{margin-bottom:16px}.mb-6{margin-bottom:24px}
         .text-sm { font-size: 13px; }
         .text-muted { color: var(--text-muted); }
-        .text-accent { color: var(--accent); }
+        .text-accent { color: var(--purple); }
         .text-danger { color: var(--danger); }
         .font-semibold { font-weight: 600; }
         .w-full { width: 100%; }
         .grid { display: grid; }
-        .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .grid-4 { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .grid-2 { grid-template-columns: repeat(2,1fr); gap: 20px; }
+        .grid-3 { grid-template-columns: repeat(3,1fr); gap: 20px; }
+        .grid-4 { grid-template-columns: repeat(4,1fr); gap: 16px; }
 
-        /* Spinner */
+        /* ─── Spinner ─────────────────────────────────────────────────── */
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner {
             width: 18px; height: 18px;
             border: 2px solid var(--border);
-            border-top-color: var(--accent);
+            border-top-color: var(--purple);
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
         }
 
-        /* Divider */
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 24px 0;
-        }
+        /* ─── Divider ─────────────────────────────────────────────────── */
+        .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
 
-        /* Dropdown */
+        /* ─── Dropdown ────────────────────────────────────────────────── */
         .dropdown { position: relative; }
         .dropdown-menu {
-            position: absolute;
-            right: 0; top: calc(100% + 8px);
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            min-width: 160px;
-            padding: 6px;
-            z-index: 200;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            position: absolute; right: 0; top: calc(100% + 8px);
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); min-width: 160px;
+            padding: 6px; z-index: 300;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
             display: none;
         }
         .dropdown.open .dropdown-menu { display: block; }
         .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            border-radius: 6px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.1s;
-            border: none;
-            background: none;
-            width: 100%;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px; border-radius: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; cursor: pointer;
+            transition: all 0.1s; border: none; background: none; width: 100%;
         }
-        .dropdown-item:hover { background: var(--bg3); color: var(--text); }
+        .dropdown-item:hover { background: var(--bg-card-hover); color: var(--text); }
         .dropdown-item.danger:hover { color: var(--danger); }
+
+        /* ─── Responsive ──────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            /* Sidebar hidden off-screen by default */
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 8px 0 48px rgba(0,0,0,0.6);
+            }
+            .sidebar-close-btn { display: flex; }
+
+            /* Full width main */
+            .main-content { margin-left: 0; }
+
+            /* Show hamburger */
+            .hamburger-btn { display: flex; }
+
+            /* Tighter spacing */
+            .topbar { padding: 0 16px; gap: 12px; }
+            .page-content { padding: 24px 16px; }
+
+            /* Collapse grids */
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .page-content { padding: 16px 12px; }
+            .topbar { padding: 0 12px; gap: 10px; }
+        }
     </style>
 
     @stack('styles')
 </head>
 <body>
+
+{{-- Overlay --}}
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <div class="app-layout">
-    {{-- Sidebar --}}
-    <aside class="sidebar">
+
+    {{-- ─── Sidebar ──────────────────────────────────────────────── --}}
+    <aside class="sidebar" id="sidebar">
+
+        {{-- Mobile close button --}}
+        <button class="sidebar-close-btn" onclick="closeSidebar()" aria-label="Tutup menu">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+
         <a href="{{ route('home') }}" class="logo">
             <div class="logo-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -391,13 +464,14 @@
             </svg>
             Token & Riwayat
         </a>
+
         <a href="{{ route('payment.pricing') }}" class="nav-link {{ request()->routeIs('payment.*') ? 'active' : '' }}">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 7a2 2 0 0 1 2-2h14a1 1 0 0 1 1 1v3H5a2 2 0 0 0-2 2V7z"/>
                 <path d="M3 11a2 2 0 0 1 2-2h15a1 1 0 0 1 1 1v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z"/>
                 <circle cx="16" cy="13" r="1"/>
             </svg>
-            Upgrade Akun & Top up
+            Upgrade & Top Up
         </a>
 
         {{-- Token Widget --}}
@@ -406,7 +480,8 @@
             <div class="token-label">Token Tersisa</div>
             <div class="token-balance" id="sidebar-token-balance">{{ auth()->user()->token_balance }}</div>
             <div class="token-bar-bg">
-                <div class="token-bar-fill" id="sidebar-token-bar" style="width: {{ min(100, auth()->user()->token_balance / 50 * 100) }}%"></div>
+                <div class="token-bar-fill" id="sidebar-token-bar"
+                    style="width: {{ min(100, auth()->user()->token_balance / 50 * 100) }}%"></div>
             </div>
             <div class="token-meta" id="sidebar-token-meta">
                 @if(auth()->user()->isPremium())
@@ -423,11 +498,13 @@
         </div>
         @endauth
 
-        {{-- User --}}
+        {{-- User dropdown --}}
         <div class="dropdown mt-2" id="user-dropdown">
             <button onclick="document.getElementById('user-dropdown').classList.toggle('open')"
-                style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;background:none;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;">
-                <div style="width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#0d0d0f;flex-shrink:0;">
+                style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;background:none;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;transition:border-color 0.15s;"
+                onmouseenter="this.style.borderColor='var(--purple-border)'"
+                onmouseleave="this.style.borderColor='var(--border)'">
+                <div style="width:28px;height:28px;background:var(--purple);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:#fff;flex-shrink:0;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
                 <span style="flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
@@ -449,10 +526,18 @@
         </div>
     </aside>
 
-    {{-- Main --}}
-    <div class="main-content">
+    {{-- ─── Main ─────────────────────────────────────────────────── --}}
+    <div class="main-content" id="main-content">
+
         <header class="topbar">
-            <div style="flex:1">
+            {{-- Hamburger (visible on mobile) --}}
+            <button class="hamburger-btn" id="hamburger-btn" onclick="openSidebar()" aria-label="Buka menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"/>
+                </svg>
+            </button>
+
+            <div style="flex:1;">
                 @yield('breadcrumb')
             </div>
             <div class="flex items-center gap-3">
@@ -481,19 +566,35 @@
 </div>
 
 <script>
-// Close dropdown when clicking outside
+/* ─── Sidebar open/close ────────────────────────────────────────── */
+function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebar-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSidebar();
+});
+
+/* ─── Dropdown ──────────────────────────────────────────────────── */
 document.addEventListener('click', function(e) {
     const dd = document.getElementById('user-dropdown');
     if (dd && !dd.contains(e.target)) dd.classList.remove('open');
 });
 
-// Refill token
+/* ─── Refill token ──────────────────────────────────────────────── */
 async function doRefill() {
     const btn = document.getElementById('btn-sidebar-refill');
     if (!btn) return;
     btn.textContent = '⏳ Memproses...';
     btn.disabled = true;
-
     try {
         const res = await fetch('{{ route("tokens.refill") }}', {
             method: 'POST',
@@ -519,7 +620,7 @@ async function doRefill() {
     }
 }
 
-// Poll token status every 30s
+/* ─── Poll token balance every 30s ─────────────────────────────── */
 setInterval(async () => {
     try {
         const res = await fetch('{{ route("tokens.status") }}');
