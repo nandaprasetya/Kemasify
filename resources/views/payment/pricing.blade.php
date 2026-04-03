@@ -28,7 +28,7 @@
     position: fixed;
     top: -20%; left: 30%;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(200,245,66,0.06) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(137,82,255,0.06) 0%, transparent 65%);
     pointer-events: none; z-index: 0;
     animation: drift 8s ease-in-out infinite alternate;
 }
@@ -47,8 +47,8 @@
 .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 6px 16px; border-radius: 99px;
-    border: 1px solid rgba(200,245,66,0.25);
-    background: rgba(200,245,66,0.07);
+    border: 1px solid rgba(137,82,255,0.25);
+    background: rgba(137,82,255,0.07);
     color: var(--accent); font-size: 12px; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
     margin-bottom: 24px;
@@ -66,7 +66,7 @@
 }
 .pricing-hero h1 em {
     font-style: normal;
-    background: linear-gradient(135deg, #c8f542 0%, #8ef000 60%, #c8f542 100%);
+    background: linear-gradient(135deg, rgb(137,82,255) 0%, rgb(175,130,255) 60%, rgb(137,82,255) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -144,23 +144,23 @@
 .plan-card::before {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(200,245,66,0.04), transparent);
+    background: linear-gradient(135deg, rgba(137,82,255,0.04), transparent);
     opacity: 0; transition: opacity 0.2s;
 }
-.plan-card:hover { border-color: rgba(200,245,66,0.3); transform: translateY(-3px); }
+.plan-card:hover { border-color: rgba(137,82,255,0.3); transform: translateY(-3px); }
 .plan-card:hover::before { opacity: 1; }
 .plan-card.selected {
     border-color: var(--accent);
-    background: linear-gradient(135deg, rgba(200,245,66,0.08), var(--bg2));
-    box-shadow: 0 0 0 1px rgba(200,245,66,0.3), 0 20px 40px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, rgba(137,82,255,0.08), var(--bg2));
+    box-shadow: 0 0 0 1px rgba(137,82,255,0.3), 0 20px 40px rgba(0,0,0,0.3);
     transform: translateY(-4px);
 }
 .plan-card.popular {
-    border-color: rgba(200,245,66,0.35);
+    border-color: rgba(137,82,255,0.35);
 }
 .popular-pill {
     position: absolute; top: 14px; right: 14px;
-    background: var(--accent); color: #0d0d0f;
+    background: var(--accent); color: #fff;
     font-size: 9px; font-weight: 800; padding: 3px 8px;
     border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase;
 }
@@ -177,7 +177,7 @@
 .plan-price-label { font-size: 11px; color: var(--text-muted); }
 .plan-save {
     display: inline-flex; margin-top: 10px;
-    background: rgba(200,245,66,0.12);
+    background: rgba(137,82,255,0.12);
     color: var(--accent); font-size: 11px; font-weight: 700;
     padding: 3px 9px; border-radius: 99px;
 }
@@ -225,7 +225,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; font-size: 14px;
 }
-.feat-icon.green { background: rgba(200,245,66,0.12); }
+.feat-icon.green { background: rgba(137,82,255,0.12); }
 .feat-icon.orange { background: rgba(255,165,2,0.12); }
 .feat-icon.blue { background: rgba(61,156,245,0.12); }
 .feat-title { font-weight: 600; }
@@ -255,22 +255,22 @@
     padding: 16px 0 0; font-size: 18px; font-weight: 800;
     font-family: 'Syne', sans-serif; color: var(--accent);
     margin-top: 8px;
-    border-top: 1px solid rgba(200,245,66,0.2);
+    border-top: 1px solid rgba(137,82,255,0.2);
 }
 .pay-btn {
     width: 100%; padding: 15px;
     background: var(--accent);
     border: none; border-radius: 12px;
-    color: #0d0d0f; font-size: 15px; font-weight: 800;
+    color: #fff; font-size: 15px; font-weight: 800;
     font-family: 'Syne', sans-serif;
     cursor: pointer; margin-top: 18px;
     transition: all 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .pay-btn:hover:not(:disabled) {
-    background: #d4f755;
+    background: rgb(155,107,255);
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(200,245,66,0.25);
+    box-shadow: 0 12px 32px rgba(137,82,255,0.25);
 }
 .pay-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
@@ -293,8 +293,8 @@
 
 /* ─── Token panel ──────────────────────────────────────────────────── */
 .token-hero-card {
-    background: linear-gradient(135deg, rgba(200,245,66,0.07), rgba(200,245,66,0.02));
-    border: 1px solid rgba(200,245,66,0.2);
+    background: linear-gradient(135deg, rgba(137,82,255,0.07), rgba(137,82,255,0.02));
+    border: 1px solid rgba(137,82,255,0.2);
     border-radius: 18px;
     padding: 36px 32px;
     text-align: center;
@@ -307,7 +307,7 @@
     position: absolute;
     top: -50%; right: -20%;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(200,245,66,0.08), transparent 60%);
+    background: radial-gradient(circle, rgba(137,82,255,0.08), transparent 60%);
     pointer-events: none;
 }
 .token-big-num {
@@ -338,7 +338,7 @@ input[type="range"] {
 }
 .range-fill {
     position: absolute; left: 0; top: 0; height: 6px;
-    background: linear-gradient(90deg, #8ef000, #c8f542);
+    background: linear-gradient(90deg, rgb(107,52,225), rgb(137,82,255));
     border-radius: 99px; pointer-events: none;
     transition: width 0.05s;
 }
@@ -351,13 +351,13 @@ input[type="range"]::-webkit-slider-thumb {
     background: var(--accent);
     border-radius: 50%;
     border: 3px solid var(--bg);
-    box-shadow: 0 0 0 2px rgba(200,245,66,0.3);
+    box-shadow: 0 0 0 2px rgba(137,82,255,0.3);
     cursor: pointer;
     margin-top: -9px;
     transition: box-shadow 0.15s;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
-    box-shadow: 0 0 0 5px rgba(200,245,66,0.2);
+    box-shadow: 0 0 0 5px rgba(137,82,255,0.2);
 }
 .range-labels {
     display: flex; justify-content: space-between;
@@ -395,7 +395,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .preset-chip:hover { border-color: var(--border-hover); color: var(--text); }
 .preset-chip.active {
     border-color: var(--accent);
-    background: rgba(200,245,66,0.08);
+    background: rgba(137,82,255,0.08);
     color: var(--accent);
 }
 .preset-chip-amount { font-weight: 700; font-size: 14px; display: block; }
@@ -561,7 +561,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         @endif
 
                         <div class="plan-check-wrap">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d0d0f" stroke-width="3">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
                                 <path d="M20 6L9 17l-5-5"/>
                             </svg>
                         </div>

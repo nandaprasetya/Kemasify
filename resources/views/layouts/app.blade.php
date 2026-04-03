@@ -19,9 +19,9 @@
             --border-hover: rgba(255,255,255,0.15);
             --text: #f0f0f2;
             --text-muted: #7a7a85;
-            --accent: #c8f542;
-            --accent-dim: rgba(200,245,66,0.12);
-            --accent-hover: #d4f755;
+            --accent: rgb(137,82,255);
+            --accent-dim: rgba(137,82,255,0.12);
+            --accent-hover: rgb(155,107,255);
             --danger: #ff4757;
             --warning: #ffa502;
             --radius: 12px;
@@ -229,7 +229,7 @@
             align-items: flex-start;
             gap: 10px;
         }
-        .alert-success { background: rgba(200,245,66,0.1); border: 1px solid rgba(200,245,66,0.3); color: var(--accent); }
+        .alert-success { background: rgba(137,82,255,0.1); border: 1px solid rgba(137,82,255,0.3); color: var(--accent); }
         .alert-error   { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: var(--danger); }
         .alert-warning  { background: rgba(255,165,2,0.1); border: 1px solid rgba(255,165,2,0.3); color: var(--warning); }
 
@@ -272,7 +272,7 @@
         }
         .badge-premium { background: linear-gradient(135deg, #f8b803, #ff6b35); color: #0d0d0f; }
         .badge-free    { background: var(--bg3); border: 1px solid var(--border); color: var(--text-muted); }
-        .badge-success { background: rgba(200,245,66,0.15); color: var(--accent); }
+        .badge-success { background: rgba(137,82,255,0.15); color: var(--accent); }
         .badge-pending { background: rgba(255,165,2,0.15); color: var(--warning); }
         .badge-failed  { background: rgba(255,71,87,0.15); color: var(--danger); }
 
