@@ -11,10 +11,27 @@
 /* ─── Fonts & Base ─────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* ─── Layout ───────────────────────────────────────────────────────── */
-.page-content{
-    max-width: 100%;
+/* ─── Design Tokens ────────────────────────────────────────────────── */
+:root {
+    --purple:        #8952FF;
+    --purple-light:  rgba(137, 82, 255, 0.15);
+    --purple-border: rgba(137, 82, 255, 0.25);
+    --purple-hover:  #7540ea;
+    --bg:            #0d0d0f;
+    --bg-card:       #141417;
+    --bg-card-hover: #18181c;
+    --text:          #f0ecfa;
+    --text-muted:    #7a7585;
+    --border:        #252330;
+    --border-hover:  rgba(137, 82, 255, 0.4);
+    --radius-sm:     8px;
+    --radius-md:     14px;
+    --radius-lg:     22px;
+    --radius-full:   999px;
 }
+
+/* ─── Layout ───────────────────────────────────────────────────────── */
+.page-content { max-width: 100%; }
 
 .pricing-root {
     position: relative;
@@ -22,13 +39,13 @@
     padding-bottom: 80px;
 }
 
-/* ─── Ambient glow background ──────────────────────────────────────── */
+/* ─── Ambient glow ─────────────────────────────────────────────────── */
 .pricing-root::before {
     content: '';
     position: fixed;
     top: -20%; left: 30%;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(200,245,66,0.06) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(137,82,255,0.07) 0%, transparent 65%);
     pointer-events: none; z-index: 0;
     animation: drift 8s ease-in-out infinite alternate;
 }
@@ -37,7 +54,7 @@
     to   { transform: translate(-60px, 40px) scale(1.1); }
 }
 
-/* ─── Hero header ──────────────────────────────────────────────────── */
+/* ─── Hero ─────────────────────────────────────────────────────────── */
 .pricing-hero {
     text-align: center;
     padding: 48px 20px 56px;
@@ -46,10 +63,10 @@
 }
 .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 16px; border-radius: 99px;
-    border: 1px solid rgba(200,245,66,0.25);
-    background: rgba(200,245,66,0.07);
-    color: var(--accent); font-size: 12px; font-weight: 600;
+    padding: 6px 16px; border-radius: var(--radius-full);
+    border: 1px solid var(--purple-border);
+    background: var(--purple-light);
+    color: var(--purple); font-size: 12px; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
     margin-bottom: 24px;
 }
@@ -58,15 +75,13 @@
 
 .pricing-hero h1 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(36px, 5vw, 60px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
+    font-size: clamp(28px, 5vw, 60px);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 16px;
 }
 .pricing-hero h1 em {
     font-style: normal;
-    background: linear-gradient(135deg, #c8f542 0%, #8ef000 60%, #c8f542 100%);
+    background: linear-gradient(135deg, #b98bff 0%, #8952FF 60%, #c4a0ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -81,35 +96,36 @@
 .current-plan-strip {
     display: inline-flex; align-items: center; gap: 10px;
     padding: 10px 18px;
-    background: var(--bg2);
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 99px;
+    border-radius: var(--radius-full);
     font-size: 13px;
+    flex-wrap: wrap; justify-content: center;
 }
 
 /* ─── Mode toggle ──────────────────────────────────────────────────── */
 .mode-toggle {
-    display: flex; align-items: center; gap: 0;
-    background: var(--bg2);
+    display: flex; align-items: center;
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     padding: 5px;
     width: fit-content;
     margin: 0 auto 48px;
 }
 .mode-btn {
     padding: 10px 28px;
-    border-radius: calc(var(--radius) - 2px);
+    border-radius: calc(var(--radius-md) - 2px);
     border: none; cursor: pointer;
     font-size: 14px; font-weight: 600;
     font-family: 'DM Sans', sans-serif;
     transition: all 0.2s;
     color: var(--text-muted);
     background: transparent;
-    position: relative;
+    white-space: nowrap;
 }
 .mode-btn.active {
-    background: var(--bg3);
+    background: var(--bg-card-hover);
     color: var(--text);
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
@@ -123,6 +139,14 @@
     to   { opacity:1; transform:translateY(0); }
 }
 
+/* ─── Two column layout ────────────────────────────────────────────── */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 28px;
+    align-items: start;
+}
+
 /* ─── Premium plan cards ───────────────────────────────────────────── */
 .plans-grid {
     display: grid;
@@ -132,9 +156,9 @@
 }
 .plan-card {
     position: relative;
-    background: var(--bg2);
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     padding: 28px 22px;
     cursor: pointer;
     transition: all 0.2s;
@@ -144,25 +168,24 @@
 .plan-card::before {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(200,245,66,0.04), transparent);
+    background: linear-gradient(135deg, var(--purple-light), transparent);
     opacity: 0; transition: opacity 0.2s;
 }
-.plan-card:hover { border-color: rgba(200,245,66,0.3); transform: translateY(-3px); }
+.plan-card:hover { border-color: var(--purple-border); transform: translateY(-3px); }
 .plan-card:hover::before { opacity: 1; }
 .plan-card.selected {
-    border-color: var(--accent);
-    background: linear-gradient(135deg, rgba(200,245,66,0.08), var(--bg2));
-    box-shadow: 0 0 0 1px rgba(200,245,66,0.3), 0 20px 40px rgba(0,0,0,0.3);
+    border-color: var(--purple);
+    background: linear-gradient(135deg, var(--purple-light), var(--bg-card));
+    box-shadow: 0 0 0 1px var(--purple-border), 0 20px 40px rgba(0,0,0,0.3);
     transform: translateY(-4px);
 }
-.plan-card.popular {
-    border-color: rgba(200,245,66,0.35);
-}
+.plan-card.popular { border-color: var(--purple-border); }
+
 .popular-pill {
     position: absolute; top: 14px; right: 14px;
-    background: var(--accent); color: #0d0d0f;
+    background: var(--purple); color: #fff;
     font-size: 9px; font-weight: 800; padding: 3px 8px;
-    border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: var(--radius-full); letter-spacing: 0.06em; text-transform: uppercase;
 }
 .plan-duration {
     font-size: 12px; color: var(--text-muted);
@@ -171,27 +194,24 @@
 }
 .plan-price-num {
     font-family: 'Syne', sans-serif;
-    font-size: 32px; font-weight: 800; line-height: 1;
+    font-size: clamp(18px, 2.5vw, 32px); font-weight: 800; line-height: 1;
     margin-bottom: 2px;
 }
 .plan-price-label { font-size: 11px; color: var(--text-muted); }
 .plan-save {
     display: inline-flex; margin-top: 10px;
-    background: rgba(200,245,66,0.12);
-    color: var(--accent); font-size: 11px; font-weight: 700;
-    padding: 3px 9px; border-radius: 99px;
+    background: var(--purple-light);
+    color: var(--purple); font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: var(--radius-full);
 }
 .plan-check-wrap {
-    margin-top: 16px;
-    width: 28px; height: 28px;
+    margin-top: 16px; width: 28px; height: 28px;
     border: 2px solid var(--border);
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     margin-left: auto; margin-right: auto;
     transition: all 0.2s;
 }
-.plan-card.selected .plan-check-wrap {
-    background: var(--accent); border-color: var(--accent);
-}
+.plan-card.selected .plan-check-wrap { background: var(--purple); border-color: var(--purple); }
 .plan-check-wrap svg { opacity: 0; transition: opacity 0.15s; }
 .plan-card.selected .plan-check-wrap svg { opacity: 1; }
 
@@ -199,14 +219,12 @@
 .features-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 32px;
+    gap: 14px; margin-bottom: 32px;
 }
 .features-col {
-    background: var(--bg2);
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: var(--radius-lg); padding: 24px;
 }
 .features-col-title {
     font-size: 11px; font-weight: 700;
@@ -221,22 +239,21 @@
 }
 .feat-item:last-child { border-bottom: none; padding-bottom: 0; }
 .feat-icon {
-    width: 28px; height: 28px; border-radius: 8px;
+    width: 28px; height: 28px; border-radius: var(--radius-sm);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; font-size: 14px;
 }
-.feat-icon.green { background: rgba(200,245,66,0.12); }
+.feat-icon.green  { background: var(--purple-light); }
 .feat-icon.orange { background: rgba(255,165,2,0.12); }
-.feat-icon.blue { background: rgba(61,156,245,0.12); }
+.feat-icon.blue   { background: rgba(61,156,245,0.12); }
 .feat-title { font-weight: 600; }
 .feat-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-/* ─── Order summary card ───────────────────────────────────────────── */
+/* ─── Order card ───────────────────────────────────────────────────── */
 .order-card {
-    background: var(--bg2);
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 28px;
+    border-radius: var(--radius-lg); padding: 28px;
     position: sticky; top: 80px;
 }
 .order-card-title {
@@ -253,24 +270,24 @@
 .order-total-line {
     display: flex; justify-content: space-between;
     padding: 16px 0 0; font-size: 18px; font-weight: 800;
-    font-family: 'Syne', sans-serif; color: var(--accent);
+    font-family: 'Syne', sans-serif; color: var(--purple);
     margin-top: 8px;
-    border-top: 1px solid rgba(200,245,66,0.2);
+    border-top: 1px solid var(--purple-border);
 }
 .pay-btn {
     width: 100%; padding: 15px;
-    background: var(--accent);
-    border: none; border-radius: 12px;
-    color: #0d0d0f; font-size: 15px; font-weight: 800;
+    background: var(--purple);
+    border: none; border-radius: var(--radius-md);
+    color: #fff; font-size: 15px; font-weight: 800;
     font-family: 'Syne', sans-serif;
     cursor: pointer; margin-top: 18px;
     transition: all 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .pay-btn:hover:not(:disabled) {
-    background: #d4f755;
+    background: var(--purple-hover);
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(200,245,66,0.25);
+    box-shadow: 0 12px 32px rgba(137,82,255,0.35);
 }
 .pay-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
@@ -283,81 +300,62 @@
     font-size: 11px; color: var(--text-muted);
 }
 
-/* ─── Two column layout ────────────────────────────────────────────── */
-.two-col {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 28px;
-    align-items: start;
-}
-
-/* ─── Token panel ──────────────────────────────────────────────────── */
+/* ─── Token hero card ──────────────────────────────────────────────── */
 .token-hero-card {
-    background: linear-gradient(135deg, rgba(200,245,66,0.07), rgba(200,245,66,0.02));
-    border: 1px solid rgba(200,245,66,0.2);
-    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(137,82,255,0.1), rgba(137,82,255,0.03));
+    border: 1px solid var(--purple-border);
+    border-radius: var(--radius-lg);
     padding: 36px 32px;
-    text-align: center;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
+    text-align: center; margin-bottom: 16px;
+    position: relative; overflow: hidden;
 }
 .token-hero-card::after {
     content: '';
-    position: absolute;
-    top: -50%; right: -20%;
+    position: absolute; top: -50%; right: -20%;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(200,245,66,0.08), transparent 60%);
+    background: radial-gradient(circle, rgba(137,82,255,0.1), transparent 60%);
     pointer-events: none;
 }
 .token-big-num {
     font-family: 'Syne', sans-serif;
-    font-size: 88px; font-weight: 800;
-    color: var(--accent); line-height: 1;
-    margin-bottom: 4px;
-    transition: all 0.1s;
+    font-size: clamp(56px, 10vw, 88px); font-weight: 800;
+    color: var(--purple); line-height: 1;
+    margin-bottom: 4px; transition: all 0.1s;
 }
-.token-big-label {
-    font-size: 16px; color: var(--text-muted);
-    margin-bottom: 28px;
-}
-/* Custom range */
+.token-big-label { font-size: 16px; color: var(--text-muted); margin-bottom: 28px; }
+
+/* Range slider */
 .range-wrap { position: relative; padding: 0 4px; }
 input[type="range"] {
     -webkit-appearance: none;
     width: 100%; height: 6px;
-    background: transparent;
-    outline: none; cursor: pointer;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    background: transparent; outline: none; cursor: pointer;
+    position: absolute; top: 0; left: 0;
 }
 .range-track {
     position: relative; height: 6px;
-    background: var(--bg3); border-radius: 99px; margin-bottom: 8px;
+    background: var(--bg-card-hover); border-radius: var(--radius-full); margin-bottom: 8px;
 }
 .range-fill {
     position: absolute; left: 0; top: 0; height: 6px;
-    background: linear-gradient(90deg, #8ef000, #c8f542);
-    border-radius: 99px; pointer-events: none;
+    background: linear-gradient(90deg, var(--purple-hover), var(--purple));
+    border-radius: var(--radius-full); pointer-events: none;
     transition: width 0.05s;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-    height: 6px; border-radius: 99px; background: transparent;
+    height: 6px; border-radius: var(--radius-full); background: transparent;
 }
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 24px; height: 24px;
-    background: var(--accent);
-    border-radius: 50%;
+    background: var(--purple); border-radius: 50%;
     border: 3px solid var(--bg);
-    box-shadow: 0 0 0 2px rgba(200,245,66,0.3);
-    cursor: pointer;
-    margin-top: -9px;
+    box-shadow: 0 0 0 2px var(--purple-border);
+    cursor: pointer; margin-top: -9px;
     transition: box-shadow 0.15s;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
-    box-shadow: 0 0 0 5px rgba(200,245,66,0.2);
+    box-shadow: 0 0 0 5px rgba(137,82,255,0.2);
 }
 .range-labels {
     display: flex; justify-content: space-between;
@@ -366,46 +364,46 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* ─── Token stats ──────────────────────────────────────────────────── */
 .token-stats {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 10px; margin: 20px 0;
 }
 .token-stat {
-    background: var(--bg3);
+    background: var(--bg-card-hover);
     border: 1px solid var(--border);
-    border-radius: 12px; padding: 14px 12px; text-align: center;
+    border-radius: var(--radius-md); padding: 14px 12px; text-align: center;
 }
 .token-stat-val {
     font-family: 'Syne', sans-serif;
-    font-size: 22px; font-weight: 800;
+    font-size: clamp(13px, 2.5vw, 22px); font-weight: 800;
     transition: all 0.1s;
 }
 .token-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.text-accent { color: var(--purple); }
 
 /* ─── Preset chips ─────────────────────────────────────────────────── */
 .preset-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .preset-chip {
-    flex: 1; min-width: 80px;
-    padding: 10px 8px; border-radius: 10px;
+    flex: 1; min-width: 72px;
+    padding: 10px 8px; border-radius: var(--radius-sm);
     border: 1px solid var(--border);
     background: transparent; cursor: pointer;
     font-family: 'DM Sans', sans-serif;
-    color: var(--text-muted); transition: all 0.15s;
-    text-align: center;
+    color: var(--text-muted); transition: all 0.15s; text-align: center;
 }
 .preset-chip:hover { border-color: var(--border-hover); color: var(--text); }
 .preset-chip.active {
-    border-color: var(--accent);
-    background: rgba(200,245,66,0.08);
-    color: var(--accent);
+    border-color: var(--purple);
+    background: var(--purple-light);
+    color: var(--purple);
 }
 .preset-chip-amount { font-weight: 700; font-size: 14px; display: block; }
-.preset-chip-price { font-size: 11px; color: inherit; opacity: 0.7; }
+.preset-chip-price  { font-size: 11px; color: inherit; opacity: 0.7; }
 
 /* ─── Usage guide ──────────────────────────────────────────────────── */
 .usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .usage-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 18px 16px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 18px 16px;
     display: flex; align-items: center; gap: 14px;
 }
 .usage-num {
@@ -416,61 +414,82 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .usage-desc strong { display: block; margin-bottom: 2px; }
 .usage-desc span { color: var(--text-muted); font-size: 12px; }
 
-/* ─── Recent orders mini ───────────────────────────────────────────── */
+/* ─── Recent orders ────────────────────────────────────────────────── */
 .recent-orders {
     margin-top: 48px;
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 18px; overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
 }
 .recent-orders-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 20px 24px; border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: 8px;
 }
 .order-row-item {
     display: grid;
     grid-template-columns: 1fr 120px 100px 100px 120px;
-    gap: 12px;
-    padding: 14px 24px;
+    gap: 12px; padding: 14px 24px;
     align-items: center;
     border-bottom: 1px solid rgba(255,255,255,0.03);
-    font-size: 13px;
-    transition: background 0.1s;
+    font-size: 13px; transition: background 0.1s;
 }
 .order-row-item:last-child { border-bottom: none; }
-.order-row-item:hover { background: rgba(255,255,255,0.015); }
+.order-row-item:hover { background: var(--bg-card-hover); }
 .order-head {
     display: grid;
     grid-template-columns: 1fr 120px 100px 100px 120px;
-    gap: 12px;
-    padding: 10px 24px;
+    gap: 12px; padding: 10px 24px;
     font-size: 11px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.07em;
     color: var(--text-muted);
 }
 
 /* ─── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+    .two-col { grid-template-columns: 1fr 340px; }
+}
+
 @media (max-width: 900px) {
-    .plans-grid { grid-template-columns: repeat(2, 1fr); }
     .two-col { grid-template-columns: 1fr; }
     .order-card { position: static; }
     .features-columns { grid-template-columns: 1fr; }
+    .token-hero-card { padding: 28px 24px; }
 }
-@media (max-width: 600px) {
-    .plans-grid { grid-template-columns: 1fr 1fr; }
-    .token-stats { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 640px) {
+    .pricing-hero { padding: 32px 16px 40px; }
+    .plan-card { padding: 20px 14px; }
+    .plans-grid { gap: 10px; }
+    .mode-btn { padding: 10px 20px; }
+    .order-card { padding: 20px 18px; }
+    .token-hero-card { padding: 24px 18px; }
     .usage-grid { grid-template-columns: 1fr; }
-    .pricing-hero h1 { font-size: 32px; }
-    .token-big-num { font-size: 64px; }
-    .order-row-item, .order-head { grid-template-columns: 1fr 80px 80px; }
+    .order-row-item,
+    .order-head { grid-template-columns: 1fr 90px 90px; padding: 12px 16px; }
     .order-row-item > *:nth-child(4),
     .order-row-item > *:nth-child(5),
     .order-head > *:nth-child(4),
     .order-head > *:nth-child(5) { display: none; }
     .preset-chips { gap: 6px; }
+    .recent-orders-header { padding: 16px; }
 }
-@media (max-width: 420px) {
+
+@media (max-width: 480px) {
+    .mode-btn { padding: 10px 16px; font-size: 13px; }
+    .plans-grid { gap: 8px; }
+    .plan-card { padding: 18px 12px; }
+    .two-col { gap: 16px; }
+    .features-col { padding: 18px 16px; }
+    .token-stats { gap: 6px; }
+    .order-row-item,
+    .order-head { grid-template-columns: 1fr 80px 80px; }
+}
+
+@media (max-width: 380px) {
     .plans-grid { grid-template-columns: 1fr; }
-    .mode-btn { padding: 10px 18px; font-size: 13px; }
+    .mode-btn { padding: 9px 14px; font-size: 12px; }
+    .preset-chip { min-width: 58px; padding: 8px 6px; }
+    .preset-chips { gap: 4px; }
 }
 </style>
 @endpush
@@ -479,13 +498,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 <div class="pricing-root">
 
-    {{-- ─── HERO ─────────────────────────────────────────────────────────── --}}
+    {{-- ─── HERO ────────────────────────────────────────────────────── --}}
     <div class="pricing-hero">
         <div class="hero-eyebrow">Kemasify Pro</div>
         <h1>Desain tanpa batas,<br><em>hasil yang maksimal.</em></h1>
         <p>Pilih premium untuk akses penuh atau beli token sesuai kebutuhan. Mulai sekarang.</p>
 
-        {{-- Status badge --}}
         <div class="current-plan-strip">
             @if($user->isPremium())
                 <span class="badge badge-premium" style="font-size:12px;padding:4px 12px;">✦ Premium Aktif</span>
@@ -497,13 +515,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
                 <span style="font-size:13px;color:var(--text-muted);">Free Plan</span>
                 <span style="width:1px;height:14px;background:var(--border);"></span>
                 <span style="font-size:13px;">
-                    Token: <strong style="color:var(--accent);">{{ $user->token_balance }}</strong>
+                    Token: <strong style="color:var(--purple);">{{ $user->token_balance }}</strong>
                 </span>
             @endif
         </div>
     </div>
 
-    {{-- ─── MODE TOGGLE ──────────────────────────────────────────────────── --}}
+    {{-- ─── MODE TOGGLE ─────────────────────────────────────────────── --}}
     <div style="display:flex;justify-content:center;">
         <div class="mode-toggle">
             <button class="mode-btn active" onclick="switchMode(this,'panel-premium')">
@@ -515,11 +533,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
         </div>
     </div>
 
-    {{-- ─── PANEL PREMIUM ────────────────────────────────────────────────── --}}
+    {{-- ─── PANEL PREMIUM ───────────────────────────────────────────── --}}
     <div id="panel-premium" class="mode-panel active">
         <div class="two-col">
 
-            {{-- Left: plan selector + features --}}
             <div>
                 <p style="font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">Pilih Durasi</p>
 
@@ -527,8 +544,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     @php
                     $plans = [
                         ['months'=>1,  'discount'=>0,    'label'=>'1 Bulan'],
-                        ['months'=>3,  'discount'=>0.05, 'label'=>'3 Bulan',  'popular'=>false],
-                        ['months'=>6,  'discount'=>0.10, 'label'=>'6 Bulan',  'popular'=>true],
+                        ['months'=>3,  'discount'=>0.05, 'label'=>'3 Bulan', 'popular'=>false],
+                        ['months'=>6,  'discount'=>0.10, 'label'=>'6 Bulan', 'popular'=>true],
                         ['months'=>12, 'discount'=>0.20, 'label'=>'1 Tahun'],
                     ];
                     @endphp
@@ -551,9 +568,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         @endif
 
                         <div class="plan-duration">{{ $plan['label'] }}</div>
-                        <div class="plan-price-num">
-                            Rp{{ number_format($per,0,',','.') }}
-                        </div>
+                        <div class="plan-price-num">Rp{{ number_format($per,0,',','.') }}</div>
                         <div class="plan-price-label">/bulan</div>
 
                         @if($plan['discount'] > 0)
@@ -561,7 +576,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         @endif
 
                         <div class="plan-check-wrap">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0d0d0f" stroke-width="3">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
                                 <path d="M20 6L9 17l-5-5"/>
                             </svg>
                         </div>
@@ -569,7 +584,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     @endforeach
                 </div>
 
-                {{-- Features --}}
                 <div class="features-columns">
                     <div class="features-col">
                         <div class="features-col-title">✦ Fitur Premium</div>
@@ -599,19 +613,20 @@ input[type="range"]::-webkit-slider-thumb:hover {
                             ['Model Premium', '✗', '✓'],
                         ] as $row)
                         <div style="display:grid;grid-template-columns:1fr 60px 60px;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;align-items:center;">
-                            <span class="text-muted">{{ $row[0] }}</span>
+                            <span style="color:var(--text-muted);">{{ $row[0] }}</span>
                             <span style="text-align:center;color:{{ $row[1]==='✗' ? 'var(--danger)' : 'var(--text-muted)' }}">{{ $row[1] }}</span>
-                            <span style="text-align:center;color:{{ $row[2]==='✓' ? 'var(--accent)' : 'var(--text)' }};font-weight:600;">{{ $row[2] }}</span>
+                            <span style="text-align:center;color:{{ $row[2]==='✓' ? 'var(--purple)' : 'var(--text)' }};font-weight:600;">{{ $row[2] }}</span>
                         </div>
                         @endforeach
                         <div style="display:grid;grid-template-columns:1fr 60px 60px;gap:8px;padding-top:10px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">
-                            <span></span><span style="text-align:center;">Free</span><span style="text-align:center;color:var(--accent);">Pro</span>
+                            <span></span>
+                            <span style="text-align:center;">Free</span>
+                            <span style="text-align:center;color:var(--purple);">Pro</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Right: order summary --}}
             <div>
                 <div class="order-card">
                     <div class="order-card-title">
@@ -634,7 +649,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         </div>
                         <div class="order-line">
                             <span style="color:var(--text-muted);">Hemat</span>
-                            <span id="os-save" style="color:var(--accent);font-weight:600;"></span>
+                            <span id="os-save" style="color:var(--purple);font-weight:600;"></span>
                         </div>
                         <div class="order-total-line">
                             <span>Total</span>
@@ -664,7 +679,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         </div>
                     </div>
 
-                    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:10px;">
+                    <div style="margin-top:16px;padding:12px;background:var(--bg-card-hover);border-radius:var(--radius-sm);">
                         <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;font-weight:600;">METODE PEMBAYARAN</div>
                         <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
                             Transfer Bank BCA, BRI, BNI, Mandiri<br>
@@ -676,11 +691,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
         </div>
     </div>
 
-    {{-- ─── PANEL TOKEN ───────────────────────────────────────────────────── --}}
+    {{-- ─── PANEL TOKEN ──────────────────────────────────────────────── --}}
     <div id="panel-token" class="mode-panel">
         <div class="two-col">
 
-            {{-- Left: slider + presets --}}
             <div>
                 <div class="token-hero-card">
                     <div class="token-big-num" id="tok-display">100</div>
@@ -714,15 +728,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     </div>
                 </div>
 
-                {{-- Quick presets --}}
                 <p style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Pilih Cepat</p>
                 <div class="preset-chips">
                     @foreach([
-                        ['val'=>50,  'label'=>'50'],
-                        ['val'=>100, 'label'=>'100'],
-                        ['val'=>200, 'label'=>'200'],
-                        ['val'=>500, 'label'=>'500'],
-                        ['val'=>1000,'label'=>'1.000'],
+                        ['val'=>50,   'label'=>'50'],
+                        ['val'=>100,  'label'=>'100'],
+                        ['val'=>200,  'label'=>'200'],
+                        ['val'=>500,  'label'=>'500'],
+                        ['val'=>1000, 'label'=>'1.000'],
                     ] as $p)
                     <button class="preset-chip {{ $p['val']==100 ? 'active' : '' }}"
                         onclick="setPreset({{ $p['val'] }}, this)">
@@ -732,11 +745,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     @endforeach
                 </div>
 
-                {{-- Usage guide --}}
                 <p style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Berapa yang kamu butuhkan?</p>
                 <div class="usage-grid">
                     <div class="usage-card">
-                        <div class="usage-num" style="color:var(--accent);">10</div>
+                        <div class="usage-num" style="color:var(--purple);">10</div>
                         <div class="usage-desc">
                             <strong>Generate AI</strong>
                             <span>Per 1x generate desain</span>
@@ -751,13 +763,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     </div>
                 </div>
 
-                <div style="margin-top:12px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:13px;color:var(--text-muted);line-height:1.6;">
+                <div style="margin-top:12px;padding:14px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);font-size:13px;color:var(--text-muted);line-height:1.6;">
                     💡 <strong style="color:var(--text);">100 token</strong> = 10x generate AI atau 2x render 3D.
                     Token tidak kadaluarsa — dipakai kapanpun kamu butuh.
                 </div>
             </div>
 
-            {{-- Right: order summary --}}
             <div>
                 <div class="order-card">
                     <div class="order-card-title">
@@ -766,7 +777,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                     </div>
                     <div class="order-line">
                         <span style="color:var(--text-muted);">Jumlah</span>
-                        <span id="tok-os-amount" style="font-weight:600;color:var(--accent);">100 token</span>
+                        <span id="tok-os-amount" style="font-weight:600;color:var(--purple);">100 token</span>
                     </div>
                     <div class="order-line">
                         <span style="color:var(--text-muted);">Harga/token</span>
@@ -803,7 +814,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
                         </div>
                     </div>
 
-                    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:10px;font-size:12px;color:var(--text-muted);line-height:1.8;">
+                    <div style="margin-top:16px;padding:12px;background:var(--bg-card-hover);border-radius:var(--radius-sm);font-size:12px;color:var(--text-muted);line-height:1.8;">
                         Transfer Bank · GoPay · OVO<br>
                         DANA · QRIS · ShopeePay
                     </div>
@@ -812,7 +823,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
         </div>
     </div>
 
-    {{-- ─── RECENT ORDERS ────────────────────────────────────────────────── --}}
+    {{-- ─── RECENT ORDERS ───────────────────────────────────────────── --}}
     @if($orders->isNotEmpty())
     <div class="recent-orders">
         <div class="recent-orders-header">
@@ -831,7 +842,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
             <span style="font-family:monospace;font-size:11px;color:var(--text-muted);">{{ $order->order_id }}</span>
             <span style="font-weight:600;font-size:13px;">
                 @if($order->isPremiumOrder())
-                    <span style="color:var(--accent);">✦</span> {{ $order->getTypeLabel() }}
+                    <span style="color:var(--purple);">✦</span> {{ $order->getTypeLabel() }}
                 @else
                     <span>🪙</span> {{ $order->getTypeLabel() }}
                 @endif
@@ -851,13 +862,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     data-client-key="{{ app(\App\Services\MidtransService::class)->getClientKey() }}"></script>
 
 <script>
-const CSRF          = document.querySelector('meta[name="csrf-token"]').content;
-const USER_BALANCE  = {{ $user->token_balance }};
-let premiumMonths   = 0;
-let premiumAmount   = 0;
-let tokenAmount     = 100;
+const CSRF         = document.querySelector('meta[name="csrf-token"]').content;
+const USER_BALANCE = {{ $user->token_balance }};
+let premiumMonths  = 0;
+let premiumAmount  = 0;
+let tokenAmount    = 100;
 
-// ─── Mode Switch ──────────────────────────────────────────────────────────────
 function switchMode(btn, panelId) {
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
@@ -865,17 +875,15 @@ function switchMode(btn, panelId) {
     document.getElementById(panelId).classList.add('active');
 }
 
-// ─── Plan Selector ────────────────────────────────────────────────────────────
 function selectPlan(card) {
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
     card.classList.add('selected');
 
-    premiumMonths  = +card.dataset.months;
-    premiumAmount  = +card.dataset.amount;
-    const per      = +card.dataset.per;
-    const discount = +card.dataset.discount;
-    const base     = 50000;
-    const saved    = base * premiumMonths - premiumAmount;
+    premiumMonths = +card.dataset.months;
+    premiumAmount = +card.dataset.amount;
+    const per     = +card.dataset.per;
+    const base    = 50000;
+    const saved   = base * premiumMonths - premiumAmount;
 
     document.getElementById('premium-empty').style.display   = 'none';
     document.getElementById('premium-summary').style.display = 'block';
@@ -883,25 +891,22 @@ function selectPlan(card) {
     document.getElementById('os-per').textContent   = 'Rp ' + per.toLocaleString('id-ID') + '/bln';
     document.getElementById('os-save').textContent  = saved > 0 ? '− Rp ' + saved.toLocaleString('id-ID') : 'Tidak ada';
     document.getElementById('os-total').textContent = 'Rp ' + premiumAmount.toLocaleString('id-ID');
-
-    const btn = document.getElementById('btn-pay-premium');
-    btn.disabled = false;
+    document.getElementById('btn-pay-premium').disabled = false;
 }
 
-// ─── Token Slider ─────────────────────────────────────────────────────────────
 function updateToken(val) {
     tokenAmount = val;
     const price = val * 100;
     const pct   = ((val - 10) / (1000 - 10) * 100).toFixed(2);
 
-    document.getElementById('tok-display').textContent  = val.toLocaleString('id-ID');
-    document.getElementById('range-fill').style.width   = pct + '%';
-    document.getElementById('ts-amount').textContent    = val;
-    document.getElementById('ts-price').textContent     = 'Rp ' + price.toLocaleString('id-ID');
-    document.getElementById('ts-after').textContent     = USER_BALANCE + val;
-    document.getElementById('tok-os-amount').textContent= val.toLocaleString('id-ID') + ' token';
-    document.getElementById('tok-os-after').textContent = (USER_BALANCE + val).toLocaleString('id-ID');
-    document.getElementById('tok-os-total').textContent = 'Rp ' + price.toLocaleString('id-ID');
+    document.getElementById('tok-display').textContent   = val.toLocaleString('id-ID');
+    document.getElementById('range-fill').style.width    = pct + '%';
+    document.getElementById('ts-amount').textContent     = val;
+    document.getElementById('ts-price').textContent      = 'Rp ' + price.toLocaleString('id-ID');
+    document.getElementById('ts-after').textContent      = USER_BALANCE + val;
+    document.getElementById('tok-os-amount').textContent = val.toLocaleString('id-ID') + ' token';
+    document.getElementById('tok-os-after').textContent  = (USER_BALANCE + val).toLocaleString('id-ID');
+    document.getElementById('tok-os-total').textContent  = 'Rp ' + price.toLocaleString('id-ID');
 }
 
 function setPreset(val, el) {
@@ -911,13 +916,11 @@ function setPreset(val, el) {
     updateToken(val);
 }
 
-// ─── Pay Premium ──────────────────────────────────────────────────────────────
 async function payPremium() {
     if (!premiumMonths) return;
     const btn = document.getElementById('btn-pay-premium');
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner" style="width:16px;height:16px;border-width:2px;"></div> Memproses...';
-
     try {
         const res  = await fetch('{{ route("payment.buy-premium") }}', {
             method: 'POST',
@@ -927,9 +930,7 @@ async function payPremium() {
         const raw  = await res.text();
         let data;
         try { data = JSON.parse(raw); } catch(e) { alert('Server error (HTTP ' + res.status + ')'); return; }
-
         if (!data.success) { alert(data.error || 'Gagal'); return; }
-
         window.snap.pay(data.snap_token, {
             onSuccess: () => location.href = '{{ route("payment.finish") }}?order_id=' + data.order_id,
             onPending: () => location.href = '{{ route("payment.finish") }}?order_id=' + data.order_id,
@@ -940,12 +941,10 @@ async function payPremium() {
     finally { btn.disabled = false; btn.innerHTML = resetBtnHtml(); }
 }
 
-// ─── Pay Token ────────────────────────────────────────────────────────────────
 async function payToken() {
     const btn = document.getElementById('btn-pay-token');
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner" style="width:16px;height:16px;border-width:2px;"></div> Memproses...';
-
     try {
         const res  = await fetch('{{ route("payment.buy-tokens") }}', {
             method: 'POST',
@@ -955,9 +954,7 @@ async function payToken() {
         const raw  = await res.text();
         let data;
         try { data = JSON.parse(raw); } catch(e) { alert('Server error (HTTP ' + res.status + ')'); return; }
-
         if (!data.success) { alert(data.error || 'Gagal'); return; }
-
         window.snap.pay(data.snap_token, {
             onSuccess: () => location.href = '{{ route("payment.finish") }}?order_id=' + data.order_id,
             onPending: () => location.href = '{{ route("payment.finish") }}?order_id=' + data.order_id,
@@ -972,7 +969,6 @@ function resetBtnHtml() {
     return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Bayar Sekarang`;
 }
 
-// Init
 updateToken(100);
 </script>
 @endpush
