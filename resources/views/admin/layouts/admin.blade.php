@@ -207,6 +207,16 @@
             @endif
         </a>
 
+        <div class="nav-group-label">Revenue</div>
+        <a href="{{ route('admin.orders.index') }}" class="nav-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            Orders & Payments
+            @php $pendingOrders = \App\Models\Order::where('status','pending')->count(); @endphp
+            @if($pendingOrders > 0)
+            <span class="nav-badge warning">{{ $pendingOrders }}</span>
+            @endif
+        </a>
+
         <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border);">
             <a href="{{ route('dashboard') }}" class="nav-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>

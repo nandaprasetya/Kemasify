@@ -33,12 +33,14 @@
         <div class="stat-box-value" style="font-size:22px;">{{ number_format($stats['total_tokens_consumed']) }}</div>
         <div class="stat-box-sub">total semua user</div>
     </div>
-    <div class="stat-box">
-        <div class="stat-box-label">Konversi Premium</div>
-        <div class="stat-box-value" style="font-size:22px; color:var(--accent);">
-            {{ $stats['total_users'] > 0 ? round($stats['premium_users'] / $stats['total_users'] * 100, 1) : 0 }}%
+    <div class="stat-box" style="border-color:rgba(200,245,66,0.2);background:rgba(200,245,66,0.04);">
+        <div class="stat-box-label">Total Revenue</div>
+        <div class="stat-box-value" style="font-size:20px;color:var(--accent);">
+            Rp{{ number_format($stats['total_revenue'],0,',','.') }}
         </div>
-        <div class="stat-box-sub">free → premium</div>
+        <div class="stat-box-sub" style="{{ $stats['pending_orders'] > 0 ? 'color:var(--warning)' : '' }}">
+            {{ $stats['pending_orders'] }} pending · {{ $stats['paid_orders_today'] }} lunas hari ini
+        </div>
     </div>
 </div>
 

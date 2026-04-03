@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProductModelController;
 use App\Http\Controllers\Admin\AiJobController;
 use App\Http\Controllers\GeminiProxyController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RenderJobController;
 
 // ─── Public ──────────────────────────────────────────────────────────────────

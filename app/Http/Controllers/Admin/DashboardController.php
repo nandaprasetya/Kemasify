@@ -26,6 +26,10 @@ class DashboardController extends Controller
             'pending_ai_jobs'  => AiGenerationJob::where('status', 'pending')->count(),
             'pending_renders'  => RenderJob::where('status', 'pending')->count(),
             'total_tokens_consumed' => TokenTransaction::where('amount', '<', 0)->sum(DB::raw('ABS(amount)')),
+            // Revenue
+            'total_revenue'    => \App\Models\Order::where('status', 'paid')->sum('amount'),
+            'pending_orders'   => \App\Models\Order::where('status', 'pending')->count(),
+            'paid_orders_today'=> \App\Models\Order::where('status', 'paid')->whereDate('paid_at', today())->count(),
         ];
 
         // ── Registrasi 7 hari terakhir ────────────────────────────────────────
