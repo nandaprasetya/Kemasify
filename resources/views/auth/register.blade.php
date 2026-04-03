@@ -339,18 +339,13 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div class="form-row">
                 <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="John" required autocomplete="given-name">
-                    @error('first_name')<div class="form-error">{{ $message }}</div>@enderror
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="Doe" required autocomplete="family-name">
-                    @error('last_name')<div class="form-error">{{ $message }}</div>@enderror
-                </div>
-            </div>
+    <label>Nama Lengkap</label>
+    <input type="text" name="name" value="{{ old('name') }}" placeholder="Masukkan nama lengkap" required autocomplete="name">
+    @error('name')
+        <div class="form-error">{{ $message }}</div>
+    @enderror
+</div>
 
             <div class="form-group">
                 <label>Email Address</label>
@@ -362,6 +357,11 @@
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Min. 8 karakter" required autocomplete="new-password">
                 @error('password')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" placeholder="Ulangi password" required autocomplete="new-password">
             </div>
 
             <button type="submit" class="btn-submit">Create Account</button>
