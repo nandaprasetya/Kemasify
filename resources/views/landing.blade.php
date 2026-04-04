@@ -281,14 +281,9 @@
     gap: 10px;
     padding: 32px 24px;
 
-    /* Tinggi otomatis mengikuti konten */
-    max-height: calc(100vh - 68px);
-    overflow-y: auto;
-
     z-index: 99;
     border-top: 1px solid var(--border);
 
-    /* Sembunyikan ke atas, bukan ke atas viewport */
     transform: translateY(-110%);
     opacity: 0;
     pointer-events: none;
