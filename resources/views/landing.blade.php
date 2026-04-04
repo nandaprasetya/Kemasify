@@ -268,32 +268,49 @@
         /* Mobile drawer */
 .nav-drawer {
     position: fixed;
-    top: 68px;
-    left: 0;
+    top: 0;
     right: 0;
-    background: rgba(13, 13, 15, 0.97);
+    bottom: 0;
+    width: 75%;
+    max-width: 320px;
+    background: rgba(13, 13, 15, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 32px 24px;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 88px 28px 40px;
 
     z-index: 99;
-    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
 
-    transform: translateY(-110%);
+    transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.25s ease;
+    transition: transform 0.35s ease, opacity 0.3s ease;
 }
 
 .nav-drawer.open {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
     pointer-events: auto;
+}
+
+        .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-overlay.open {
+    display: block;
+    opacity: 1;
 }
 
         .nav-drawer a {
@@ -1407,6 +1424,8 @@
         </div>
     </footer>
 
+    <div class="nav-overlay" id="navOverlay" onclick="closeDrawer()"></div>
+
     <!-- ============================================================
          JAVASCRIPT
     ============================================================ -->
@@ -1484,6 +1503,37 @@
             const fadeElements = document.querySelectorAll('.fade-in');
             fadeElements.forEach(el => fadeObserver.observe(el));
         });
+
+        const overlay = document.getElementById('navOverlay');
+
+toggle.addEventListener('click', () => {
+    drawerOpen = !drawerOpen;
+    drawer.classList.toggle('open', drawerOpen);
+    overlay.classList.toggle('open', drawerOpen);
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+
+    const spans = toggle.querySelectorAll('span');
+    if (drawerOpen) {
+        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+    }
+});
+
+function closeDrawer() {
+    drawerOpen = false;
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    const spans = toggle.querySelectorAll('span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+}
     </script>
 </body>
 
