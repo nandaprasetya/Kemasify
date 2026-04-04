@@ -268,27 +268,38 @@
         /* Mobile drawer */
 .nav-drawer {
     position: fixed;
-    inset: 68px 0 0 0;
+    top: 68px;
+    left: 0;
+    right: 0;
     background: rgba(13, 13, 15, 0.97);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-    display: flex; /* ✅ pindahkan ke sini */
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 40px 24px;
-    height: calc(100vh - 68px);
+    padding: 32px 24px;
+
+    /* Tinggi otomatis mengikuti konten */
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
 
     z-index: 99;
     border-top: 1px solid var(--border);
 
-    transform: translateY(-100%);
-    transition: transform 0.3s ease;
+    /* Sembunyikan ke atas, bukan ke atas viewport */
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.25s ease;
 }
 
-        .nav-drawer.open {
-            transform: translateY(0);
-        }
+.nav-drawer.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
 
         .nav-drawer a {
             font-family: 'Syne', sans-serif;
