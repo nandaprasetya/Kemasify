@@ -1429,112 +1429,80 @@
     <!-- ============================================================
          JAVASCRIPT
     ============================================================ -->
-    <script>
-        /* --- Accordion --- */
-        function toggleAccordion(item) {
-            const body = item.querySelector('.accordion-body');
-            const isOpen = item.classList.contains('open');
-
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('open');
-                i.querySelector('.accordion-body').style.maxHeight = '0';
-            });
-
-            if (!isOpen) {
-                item.classList.add('open');
-                body.style.maxHeight = body.scrollHeight + 'px';
-            }
+<script>
+    /* --- Accordion --- */
+    function toggleAccordion(item) {
+        const body = item.querySelector('.accordion-body');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.accordion-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.accordion-body').style.maxHeight = '0';
+        });
+        if (!isOpen) {
+            item.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 'px';
         }
+    }
 
-        /* Init first accordion open */
-        document.addEventListener('DOMContentLoaded', () => {
-            const firstBody = document.querySelector('.accordion-item.open .accordion-body');
-            if (firstBody) firstBody.style.maxHeight = firstBody.scrollHeight + 'px';
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstBody = document.querySelector('.accordion-item.open .accordion-body');
+        if (firstBody) firstBody.style.maxHeight = firstBody.scrollHeight + 'px';
+    });
 
-        /* --- Mobile nav drawer --- */
-        const toggle = document.getElementById('navToggle');
-        const drawer = document.getElementById('navDrawer');
-        let drawerOpen = false;
+    /* --- Mobile nav drawer --- */
+    const toggle = document.getElementById('navToggle');
+    const drawer = document.getElementById('navDrawer');
+    const overlay = document.getElementById('navOverlay');
+    let drawerOpen = false;
 
-        toggle.addEventListener('click', () => {
-            drawerOpen = !drawerOpen;
-            drawer.classList.toggle('open', drawerOpen);
-            // Animate hamburger to X
-            const spans = toggle.querySelectorAll('span');
-            if (drawerOpen) {
-                spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-            } else {
-                spans[0].style.transform = '';
-                spans[1].style.opacity = '';
-                spans[2].style.transform = '';
-            }
-        });
-
-        function closeDrawer() {
-            drawerOpen = false;
-            drawer.classList.remove('open');
-            const spans = toggle.querySelectorAll('span');
+    toggle.addEventListener('click', () => {
+        drawerOpen = !drawerOpen;
+        drawer.classList.toggle('open', drawerOpen);
+        overlay.classList.toggle('open', drawerOpen);
+        document.body.style.overflow = drawerOpen ? 'hidden' : '';
+        const spans = toggle.querySelectorAll('span');
+        if (drawerOpen) {
+            spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+        } else {
             spans[0].style.transform = '';
             spans[1].style.opacity = '';
             spans[2].style.transform = '';
         }
+    });
 
-        /* --- Fade In Intersection Observer --- */
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.20 // Animasi mulai saat 15% elemen terlihat
-        };
-
-        const fadeObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Hapus jika ingin animasi berulang saat scroll naik/turun
-                }
-            });
-        }, observerOptions);
-
-        // Jalankan observer saat DOM selesai dimuat
-        document.addEventListener('DOMContentLoaded', () => {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => fadeObserver.observe(el));
-        });
-
-        const overlay = document.getElementById('navOverlay');
-
-toggle.addEventListener('click', () => {
-    drawerOpen = !drawerOpen;
-    drawer.classList.toggle('open', drawerOpen);
-    overlay.classList.toggle('open', drawerOpen);
-    document.body.style.overflow = drawerOpen ? 'hidden' : '';
-
-    const spans = toggle.querySelectorAll('span');
-    if (drawerOpen) {
-        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-    } else {
+    function closeDrawer() {
+        drawerOpen = false;
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        const spans = toggle.querySelectorAll('span');
         spans[0].style.transform = '';
         spans[1].style.opacity = '';
         spans[2].style.transform = '';
     }
-});
 
-function closeDrawer() {
-    drawerOpen = false;
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-    const spans = toggle.querySelectorAll('span');
-    spans[0].style.transform = '';
-    spans[1].style.opacity = '';
-    spans[2].style.transform = '';
-}
-    </script>
+    /* --- Fade In Intersection Observer --- */
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
+    const fadeObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        fadeElements.forEach(el => fadeObserver.observe(el));
+    });
+</script>
 </body>
 
 </html>
