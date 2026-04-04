@@ -268,27 +268,50 @@
         /* Mobile drawer */
 .nav-drawer {
     position: fixed;
-    inset: 68px 0 0 0;
-    background: rgba(13, 13, 15, 0.97);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 75%;
+    max-width: 320px;
+    background: rgba(13, 13, 15, 0.98);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-    display: flex; /* ✅ pindahkan ke sini */
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 40px 24px;
-    height: calc(100vh - 68px);
+    align-items: flex-start;
+    gap: 8px;
+    padding: 88px 28px 40px;
 
     z-index: 99;
-    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
 
-    transform: translateY(-100%);
-    transition: transform 0.3s ease;
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.35s ease, opacity 0.3s ease;
 }
 
-        .nav-drawer.open {
-            transform: translateY(0);
-        }
+.nav-drawer.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+        .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 98;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-overlay.open {
+    display: block;
+    opacity: 1;
+}
 
         .nav-drawer a {
             font-family: 'Syne', sans-serif;
@@ -1401,84 +1424,85 @@
         </div>
     </footer>
 
+    <div class="nav-overlay" id="navOverlay" onclick="closeDrawer()"></div>
+
     <!-- ============================================================
          JAVASCRIPT
     ============================================================ -->
-    <script>
-        /* --- Accordion --- */
-        function toggleAccordion(item) {
-            const body = item.querySelector('.accordion-body');
-            const isOpen = item.classList.contains('open');
-
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('open');
-                i.querySelector('.accordion-body').style.maxHeight = '0';
-            });
-
-            if (!isOpen) {
-                item.classList.add('open');
-                body.style.maxHeight = body.scrollHeight + 'px';
-            }
+<script>
+    /* --- Accordion --- */
+    function toggleAccordion(item) {
+        const body = item.querySelector('.accordion-body');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.accordion-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.accordion-body').style.maxHeight = '0';
+        });
+        if (!isOpen) {
+            item.classList.add('open');
+            body.style.maxHeight = body.scrollHeight + 'px';
         }
+    }
 
-        /* Init first accordion open */
-        document.addEventListener('DOMContentLoaded', () => {
-            const firstBody = document.querySelector('.accordion-item.open .accordion-body');
-            if (firstBody) firstBody.style.maxHeight = firstBody.scrollHeight + 'px';
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstBody = document.querySelector('.accordion-item.open .accordion-body');
+        if (firstBody) firstBody.style.maxHeight = firstBody.scrollHeight + 'px';
+    });
 
-        /* --- Mobile nav drawer --- */
-        const toggle = document.getElementById('navToggle');
-        const drawer = document.getElementById('navDrawer');
-        let drawerOpen = false;
+    /* --- Mobile nav drawer --- */
+    const toggle = document.getElementById('navToggle');
+    const drawer = document.getElementById('navDrawer');
+    const overlay = document.getElementById('navOverlay');
+    let drawerOpen = false;
 
-        toggle.addEventListener('click', () => {
-            drawerOpen = !drawerOpen;
-            drawer.classList.toggle('open', drawerOpen);
-            // Animate hamburger to X
-            const spans = toggle.querySelectorAll('span');
-            if (drawerOpen) {
-                spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-            } else {
-                spans[0].style.transform = '';
-                spans[1].style.opacity = '';
-                spans[2].style.transform = '';
-            }
-        });
-
-        function closeDrawer() {
-            drawerOpen = false;
-            drawer.classList.remove('open');
-            const spans = toggle.querySelectorAll('span');
+    toggle.addEventListener('click', () => {
+        drawerOpen = !drawerOpen;
+        drawer.classList.toggle('open', drawerOpen);
+        overlay.classList.toggle('open', drawerOpen);
+        document.body.style.overflow = drawerOpen ? 'hidden' : '';
+        const spans = toggle.querySelectorAll('span');
+        if (drawerOpen) {
+            spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+        } else {
             spans[0].style.transform = '';
             spans[1].style.opacity = '';
             spans[2].style.transform = '';
         }
+    });
 
-        /* --- Fade In Intersection Observer --- */
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.20 // Animasi mulai saat 15% elemen terlihat
-        };
+    function closeDrawer() {
+        drawerOpen = false;
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        const spans = toggle.querySelectorAll('span');
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+    }
 
-        const fadeObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Hapus jika ingin animasi berulang saat scroll naik/turun
-                }
-            });
-        }, observerOptions);
-
-        // Jalankan observer saat DOM selesai dimuat
-        document.addEventListener('DOMContentLoaded', () => {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => fadeObserver.observe(el));
+    /* --- Fade In Intersection Observer --- */
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
+    const fadeObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
         });
-    </script>
+    }, observerOptions);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        fadeElements.forEach(el => fadeObserver.observe(el));
+    });
+</script>
 </body>
 
 </html>
