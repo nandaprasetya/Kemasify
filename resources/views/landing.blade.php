@@ -758,25 +758,25 @@
     <div class="hero-ring hero-ring-1"></div>
     <div class="hero-ring hero-ring-2"></div>
 
-    <div class="hero-content">
-        <div class="badge">
+    <div class="hero-content fade-in">
+        <div class="badge fade-in">
             <svg width="13" height="13" viewBox="0 0 26 26" fill="none">
                 <path d="M15.21 16.1L14.25 19.46C13.89 20.72 12.11 20.72 11.75 19.46L10.79 16.1C10.73 15.89 10.62 15.7 10.46 15.54C10.3 15.38 10.11 15.27 9.9 15.21L6.54 14.25C5.28 13.89 5.28 12.11 6.54 11.75L9.9 10.79C10.11 10.73 10.3 10.62 10.46 10.46C10.62 10.3 10.73 10.11 10.79 9.9L11.75 6.54C12.11 5.28 13.89 5.28 14.25 6.54L15.21 9.9C15.27 10.11 15.38 10.3 15.54 10.46C15.7 10.62 15.89 10.73 16.1 10.79L19.46 11.75C20.72 12.11 20.72 13.89 19.46 14.25L16.1 15.21C15.89 15.27 15.7 15.38 15.54 15.54C15.38 15.7 15.27 15.89 15.21 16.1Z" stroke="#8952FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             AI-Powered Design Platform
         </div>
 
-        <h1>Wujudkan desain kemasan impian anda hanya di <span>KEMASIFY</span></h1>
-        <p>Upload desain atau generate dengan AI, lalu render menjadi mockup 3D profesional. Dalam hitungan menit.</p>
+        <h1 class="fade-in">Wujudkan desain kemasan impian anda hanya di <span>KEMASIFY</span></h1>
+        <p class="fade-in">Upload desain atau generate dengan AI, lalu render menjadi mockup 3D profesional. Dalam hitungan menit.</p>
 
-        <div class="hero-cta">
-            <a href="#" class="btn btn-primary">
+        <div class="hero-cta fade-in">
+            <a href="#" class="btn btn-primary fade-in">
                 Mulai Gratis — 50 Token
                 <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
             </a>
-            <a href="#" class="btn btn-outline">
+            <a href="#" class="btn btn-outline fade-in">
                 Login
                 <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
