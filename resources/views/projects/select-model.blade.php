@@ -12,12 +12,14 @@
 
 @push('styles')
 <style>
-/* ─── Page header ────────────────────────────────────── */
+/* ─── Page header ─────────────────────────────────────── */
 .page-header { margin-bottom: 28px; }
 .page-header h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-.page-header p { color: var(--text-muted); font-size: 14px; }
+.page-header p  { color: var(--text-muted); font-size: 14px; }
 
-/* ─── Layout ─────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   DESKTOP LAYOUT (≥ 769px)  — two-column: grid | sticky form
+═══════════════════════════════════════════════════════ */
 .select-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -28,16 +30,17 @@
 /* ─── Category ───────────────────────────────────────── */
 .category-section { margin-bottom: 28px; }
 .category-label {
-    font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.category-label::after {
-    content: '';
-    flex: 1; height: 1px;
-    background: var(--border);
-}
+.category-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
 /* ─── Model grid ─────────────────────────────────────── */
 .model-grid {
@@ -69,7 +72,9 @@
 .model-thumb {
     aspect-ratio: 1;
     background: var(--bg-card-hover);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 12px;
 }
 .model-thumb img { width: 100%; height: 100%; object-fit: contain; }
@@ -78,7 +83,8 @@
 .model-body { padding: 10px 12px 12px; }
 .model-name {
     font-family: 'Syne', sans-serif;
-    font-size: 12.5px; font-weight: 700;
+    font-size: 12.5px;
+    font-weight: 700;
     line-height: 1.3;
 }
 .model-cat { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
@@ -86,7 +92,8 @@
 .model-check {
     position: absolute; top: 8px; right: 8px;
     width: 20px; height: 20px;
-    background: var(--purple); border-radius: 50%;
+    background: var(--purple);
+    border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transform: scale(0.7);
     transition: all 0.18s;
@@ -111,7 +118,7 @@
     top: calc(var(--topbar-h) + 16px);
 }
 .form-panel-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-.form-panel-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 18px; }
+.form-panel-sub   { font-size: 12.5px; color: var(--text-muted); margin-bottom: 18px; }
 
 .selected-model-box {
     background: var(--bg-card-hover);
@@ -122,7 +129,7 @@
     display: none;
 }
 .selected-model-box-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
-.selected-model-box-name { font-weight: 600; font-size: 13.5px; }
+.selected-model-box-name  { font-weight: 600; font-size: 13.5px; }
 
 .btn-create {
     width: 100%;
@@ -134,17 +141,16 @@
     pointer-events: none;
     transition: all 0.2s;
 }
-.btn-create.enabled {
-    opacity: 1;
-    cursor: pointer;
-    pointer-events: all;
-}
+.btn-create.enabled { opacity: 1; cursor: pointer; pointer-events: all; }
 
-/* ─── Responsive ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   TABLET  (≤ 900px)
+═══════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
     .select-layout {
         grid-template-columns: 1fr;
     }
+    /* Form panel rises to top on tablet/mobile */
     .form-panel {
         position: static;
         order: -1;
@@ -153,16 +159,58 @@
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 }
-@media (max-width: 480px) {
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE  (≤ 600px)
+═══════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+    .page-header       { margin-bottom: 18px; }
+    .page-header h1    { font-size: 20px; }
+    .page-header p     { font-size: 13px; }
+
+    .select-layout     { gap: 14px; }
+
+    /* Form panel compact */
+    .form-panel        { padding: 16px; border-radius: var(--radius-sm); }
+    .form-panel-title  { font-size: 14px; }
+    .form-panel-sub    { font-size: 12px; margin-bottom: 14px; }
+
+    /* Larger tap target on the create button */
+    .btn-create        { padding: 13px; font-size: 13px; }
+
+    /* Model grid: 3-per-row on most phones */
     .model-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
-    .model-body { padding: 8px 10px 10px; }
-    .model-name { font-size: 11px; }
+
+    .model-thumb       { padding: 8px; }
+    .model-body        { padding: 7px 8px 9px; }
+    .model-name        { font-size: 11px; }
+    .model-cat         { font-size: 9.5px; margin-top: 2px; }
+
+    .model-check       { width: 18px; height: 18px; top: 6px; right: 6px; }
+    .lock-badge        { width: 20px; height: 20px; top: 6px; right: 6px; }
+
+    .category-section  { margin-bottom: 18px; }
+    .category-label    { font-size: 10px; margin-bottom: 8px; }
+
+    /* Selected model box */
+    .selected-model-box { padding: 9px 11px; margin-bottom: 14px; }
+    .selected-model-box-name { font-size: 13px; }
+
+    /* Alert compact */
+    .alert             { font-size: 12px; padding: 10px 12px; }
 }
-@media (max-width: 360px) {
-    .model-grid { grid-template-columns: repeat(2, 1fr); }
+
+/* ─── Very small screens (≤ 380px) ──────────────────── */
+@media (max-width: 380px) {
+    .model-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
+    }
+    .model-thumb { padding: 10px; }
+    .model-name  { font-size: 11.5px; }
 }
 </style>
 @endpush
@@ -182,6 +230,7 @@
         <div class="category-section">
             <div class="category-label">{{ ucfirst($category) }}</div>
             <div class="model-grid">
+
                 @foreach($categoryModels as $model)
                 <div class="model-card"
                     data-model-id="{{ $model->id }}"
@@ -224,6 +273,7 @@
                     </div>
                     @endforeach
                 @endif
+
             </div>
         </div>
         @endforeach
@@ -266,11 +316,14 @@
 
         @if($user->isFree())
         <div class="alert alert-warning" style="margin-top:14px; margin-bottom:0; font-size:12.5px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            </svg>
             <div><strong>Free Plan:</strong> Saldo token: <strong>{{ $user->token_balance }}</strong></div>
         </div>
         @endif
     </div>
+
 </div>
 
 @push('scripts')
@@ -283,11 +336,16 @@ function selectModel(card) {
     card.classList.add('selected');
     selectedCard = card;
 
-    document.getElementById('model-id-input').value = card.dataset.modelId;
+    document.getElementById('model-id-input').value        = card.dataset.modelId;
     document.getElementById('selected-model-name').textContent = card.dataset.modelName;
     document.getElementById('selected-model-info').style.display = 'block';
-    document.getElementById('no-model-msg').style.display = 'none';
+    document.getElementById('no-model-msg').style.display  = 'none';
     document.getElementById('btn-create').classList.add('enabled');
+
+    // On mobile, scroll form panel into view after selection
+    if (window.innerWidth <= 900) {
+        document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 }
 </script>
 @endpush
