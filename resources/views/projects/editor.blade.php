@@ -387,10 +387,10 @@
             <div class="psec-title">Mode Editor</div>
             <div class="mode-tabs">
                 <button class="mode-tab on" id="mtab-builtin" onclick="switchEditorMode('builtin')">
-                    📦 Built-in
+                     Built-in
                 </button>
                 <button class="mode-tab" id="mtab-custom" onclick="switchEditorMode('custom')">
-                    🗂 File 3D
+                     File 3D
                 </button>
             </div>
             <div style="margin-top:8px;font-size:10px;color:var(--text-muted);line-height:1.6;" id="mode-hint">
@@ -529,7 +529,7 @@
                     onclick="document.getElementById('input-3d-file').click()">
                     <input type="file" id="input-3d-file" accept=".obj,.3ds,.glb,.gltf"
                         style="display:none" onchange="loadModelFile(this)">
-                    <div class="muz-icon">📦</div>
+                    <div class="muz-icon"></div>
                     <div class="muz-label" id="muz-label">
                         @if($modelFileUrl) Ganti file 3D @else Upload file 3D @endif
                     </div>
@@ -758,7 +758,7 @@
                 <button class="btn btn-ghost btn-sm" onclick="toggleWireframe()">⬡ Toggle Wireframe</button>
                 @if($user->isPremium())
                 <button class="btn btn-primary btn-sm" onclick="saveSnapshot()" style="justify-content:center;">
-                    📷 Download PNG HD
+                    Download PNG HD
                 </button>
                 @else
                 <div style="font-size:11px;color:var(--text-muted);padding:8px;background:var(--bg3);border-radius:8px;text-align:center;">
@@ -1449,7 +1449,7 @@ async function doMeshGenerate(idx) {
     const prompt = document.getElementById(`mai-prompt-${idx}`)?.value.trim();
     if (!prompt) { alert('Masukkan deskripsi desain.'); return; }
     const btn = document.getElementById(`mai-btn-${idx}`);
-    btn.disabled=true; btn.textContent='⏳ Memproses...';
+    btn.disabled=true; btn.textContent=' Memproses...';
     showMeshAiCard(idx,'processing',`
         <div style="display:flex;align-items:center;gap:7px;color:var(--accent);font-size:11px;font-weight:600;">
             <div style="width:10px;height:10px;border:2px solid rgba(200,245,66,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;"></div>
@@ -1544,7 +1544,7 @@ async function applyTexToMesh(idx, input) {
     input.value='';
     const md=meshData[idx];
     const url=URL.createObjectURL(file);
-    showMeshUploadStatus(idx,'⏳ Uploading...','var(--text-muted)');
+    showMeshUploadStatus(idx,' Uploading...','var(--text-muted)');
     const fd=new FormData(); fd.append('design_file',file); fd.append('_token',CSRF);
     try {
         const res=await fetch(`/projects/${SLUG}/upload-design`,{method:'POST',headers:{'Accept':'application/json'},body:fd});
@@ -1633,7 +1633,7 @@ async function doCustomGenerate() {
     const prompt=document.getElementById('cai-prompt').value.trim();
     if (!prompt) { alert('Masukkan deskripsi desain.'); return; }
     const btn=document.getElementById('cbtn-gen');
-    btn.disabled=true; btn.textContent='⏳ Memproses...';
+    btn.disabled=true; btn.textContent='Memproses...';
     showCustomAiCard('processing',`
         <div style="display:flex;align-items:center;gap:8px;color:var(--accent);font-weight:600;">
             <div style="width:12px;height:12px;border:2px solid rgba(200,245,66,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;"></div>
